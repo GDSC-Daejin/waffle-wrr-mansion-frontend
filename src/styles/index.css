@@ -1,0 +1,10 @@
+/* index.css */
+
+@font-face {
+  font-family: cafe24Syongsyong;
+  src: url(/public/assets/Cafe24Syongsyong-v2.0.woff2),
+       url(/public/assets/Cafe24Syongsyong-v2.0.woff);
+}
+body {
+  font-family: cafe24Syongsyong;
+}
