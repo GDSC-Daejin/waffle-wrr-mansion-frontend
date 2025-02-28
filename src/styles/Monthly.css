@@ -6,7 +6,7 @@
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-image: url("/public/assets/poc.web_background.png"); 
+    background-image: url("/public/assets/poc_background_monthly.png"); 
     background-size: cover; /* 배경을 화면에 꽉 채우기 */
     background-position: center; /* 중앙 정렬 */
     background-repeat: no-repeat; /* 반복 제거 */

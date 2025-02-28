@@ -21,27 +21,27 @@ html, body {
   justify-content: center; /* 세로 중앙 정렬 */
   min-height: 100vh; /* 화면 전체 높이 */
   width: 100vw; /* 가로 전체 너비 */
-  background-image: url("/public/assets/poc.web_background.png"); 
+  background-image: url("/public/assets/poc_background_signup.png"); 
   background-size: cover; /* 배경을 화면에 꽉 채우기 */
   background-position: center; /* 중앙 정렬 */
   background-repeat: no-repeat; /* 반복 제거 */
 }
 
 .logo {
-  width: 350.23px;
+  width: 280.18px;
   height: auto;
-  margin-bottom: 36px;
+  margin-bottom: 29px;
 }
 
 .description{
   width: auto;
-  height: 42.98px;
-  margin-bottom: 36px;
+  height: 34.38px;
+  margin-bottom: 29px;
 }
 .signup-button{
   background: none;
   border: none;
 }
 .signup-button img {
-  width: 251px;
+  width: 200.8px;
 }

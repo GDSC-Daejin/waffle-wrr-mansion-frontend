@@ -15,8 +15,8 @@ function Home() {
 
   return (
     <div className="home-container">
-      <img src="/assets/poc.web_logo-05.png" alt="PoG_logo" className="logo" />
-      <img src="/assets/description.png" alt="PoG_description" className="description" />
+      <img src="/assets/poc_logo.png" alt="PoG_logo" className="logo" />
+      <img src="/assets/poc_description.png" alt="PoG_description" className="description" />
       <button className="signup-button" >
         <img src="/assets/google_signup_btn.png" alt="signin-btn" onClick={!userData ? handleLogin : null}/>
       </button>
