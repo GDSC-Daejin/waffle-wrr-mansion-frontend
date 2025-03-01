@@ -63,8 +63,11 @@ const Monthly = () => {
 
       {/* 상단 헤더 */}
       <header className="calendar-header">
-        <h2>{date.getMonth() + 1}</h2>
-        <h2>{date.getFullYear()} {date.toLocaleString("en-US", { month: "long" })}</h2>
+        <div className="Num-m">
+          <img src="/assets/poc_monthly_star.png" alt="Num-m-pic" className="Num-m-img"/>
+          <span className="Num-m-text">{date.getMonth() + 1}</span>
+        </div>
+        <span className="En-y-m">{date.getFullYear()} {date.toLocaleString("en-US", { month: "long" })}</span>
       </header>
 
       {/* 캘린더와 네비게이션 버튼을 감싼 컨테이너 */}
