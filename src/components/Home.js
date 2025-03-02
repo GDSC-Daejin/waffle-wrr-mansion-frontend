@@ -1,4 +1,3 @@
-// Home.js
 import React, { useState } from "react";
 import { handleGoogleLogin } from "../components/Sign"; // 로그인 기능 import
 import { useNavigate } from "react-router-dom"; // useNavigate import
