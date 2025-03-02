@@ -1,0 +1,174 @@
+/* user-header 아래에 모달 추가 */
+.user-header {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  display: flex; /* 플렉스 박스를 사용하여 정렬 */
+  justify-content: flex-end; /* 오른쪽 끝에 배치 */
+}
+
+.user-header span {
+  font-family: 'SUIT Variable', sans-serif;
+  font-size: 1.2rem;
+  color: #3F2D20;
+}
+
+.user-profile-img {
+  width: 2rem;
+}
+
+/* user-modal 스타일 */
+.user-modal {
+  background-color: #FFF8E7;
+  width: 31.05rem;
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0px 3.2px 40px 0px rgba(145, 0, 23, 0.2);
+  position: fixed;
+  top: 10%;
+  right: 30px;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-header {
+  display: flex; /* 두 요소를 가로로 배치 */
+  justify-content: space-between; /* 공간을 적절하게 분배 */
+  align-items: center; /* 세로로 중앙 정렬 */
+  position: relative;
+  padding: 0px 10px; /* 필요한 여백 조정 */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 3px dotted #F7DDD1;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #5C4033;
+  margin: 0; /* 불필요한 여백 제거 */
+}
+
+.close-btn {
+  font-family: 'Cafe24Syongsyong', sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  cursor: pointer;
+  color: #DEBEAF;
+  padding: 0; /* 여백 없애기 */
+  margin: 0; /* 여백 없애기 */
+  background-color: transparent;
+  border: none;
+}
+
+/* content 영역 */
+.modal-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 세로 정렬 */
+}
+
+/* aside (프로필 이미지 영역) */
+.aside {
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-img {
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%; /* 원형으로 만들기 */
+}
+
+/* main (이름, 이메일 영역) */
+.main {
+  font-family: 'SUIT Variable';
+  color: #5C4033;
+  width: 34%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 좌측 정렬 */
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+  margin-left: 5%;
+}
+
+.user-name {
+  font-size: 2.13rem;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.user-email {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+/* bside (옵션 버튼과 로그아웃 버튼 영역) */
+.bside {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 왼쪽 정렬 */
+  padding-left: 20px;
+  justify-content: space-between;
+}
+
+.options-btn {
+  font-family: 'SUIT Variable';
+  font-size: 1.591rem;
+  cursor: pointer;
+  margin-bottom: 50px;
+  background-color: transparent;
+  border: none;
+
+}
+
+.logout-btn {
+  font-family: 'cafe24Syongsyong';
+  font-size: 1.066rem;
+  font-weight: 400;
+  background-color: #DEBEAF;
+  color: #FAFAFA;
+  padding: 5px 20px;
+  border-radius: 80px;
+  cursor: pointer;
+  border: none;
+
+}
+
+
+.delete-message {
+    display: flex;
+    flex-direction: column; /* 내용 세로로 쌓이도록 설정 */
+    justify-content: center; /* 수직 가운데 정렬 */
+    align-items: center; /* 수평 가운데 정렬 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    padding: 20px; /* 적당한 여백 추가 */
+    line-height: 2; /* 기본 행간 설정 */
+  }
+  
+  .delete-message .image-container {
+    display: flex;
+    align-items: center; /* 이미지와 '에서'가 수평 정렬되도록 설정 */
+  }
+  
+  .delete-message img {
+    margin-right: 5px; /* 이미지와 '에서' 사이 간격 추가 */
+    width: 169.6px;
+  }
+  
+  .delete-message span {
+    display: block; /* 텍스트 부분이 세로로 쌓이게 설정 */
+  }
+  
+.image-container {
+    display: flex;
+    align-items: center; /* 이미지와 '에서'가 수평 정렬되도록 설정 */
+}
+  
+
+
+  

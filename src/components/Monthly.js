@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
 import { auth} from "../config/firebaseConfig"; // Firebase 인증 가져오기
-import { signOut } from "firebase/auth";
+//import { signOut } from "firebase/auth";
+import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Monthly.css"; // CSS 파일 사용
+import "../styles/Monthly.css"; 
+import UserModal from "../components/UserModal"; 
 
 const Monthly = () => {
   const [date, setDate] = useState(new Date());
   const [todos, setTodos] = useState({}); // 할 일 목록을 객체로 관리 (날짜별로 할 일)
   const [user, setUser] = useState(null); // 사용자 정보 상태
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   // 로그인된 사용자 상태 감지
@@ -22,7 +25,7 @@ const Monthly = () => {
   }, []);
 
   const handleDateClick = (selectedDate) => {
-    const formattedDate = selectedDate.toISOString().split("T")[0];
+    const formattedDate = format(selectedDate, "yyyy-MM-dd");
     navigate(`/daily/${formattedDate}`);
   };
 
@@ -32,14 +35,6 @@ const Monthly = () => {
 
   const nextMonth = () => {
     setDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
-  };
-
-  // 로그아웃 처리
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      setUser(null);
-      navigate("/"); // 로그아웃 후 홈으로 이동
-    }).catch((error) => console.error("로그아웃 실패:", error));
   };
 
   // 테스트용: 할 일 데이터를 추가
@@ -53,21 +48,31 @@ const Monthly = () => {
 
   return (
     <div className="monthly-container">
-      {/* 로그인한 사용자 정보 표시 */}
+      {/* 로그인한 사용자 정보 */}
       {user && (
         <header className="user-header">
           <span className="user-name">{user.displayName}</span>
-          <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
+          {/* 프로필 이미지 버튼 */}
+          <img
+            src={"/assets/poc_profile.png"}
+            alt="User Profile"
+            className="user-profile-img"
+            onClick={() => setIsModalOpen(true)}
+          />
         </header>
       )}
+      {/* 유저 모달 */}
+      {isModalOpen && <UserModal user={user} onClose={() => setIsModalOpen(false)} />}
 
       {/* 상단 헤더 */}
       <header className="calendar-header">
         <div className="Num-m">
-          <img src="/assets/poc_monthly_star.png" alt="Num-m-pic" className="Num-m-img"/>
+          <img src="/assets/poc_monthly_star.png" alt="Num-m-pic" className="Num-m-img" />
           <span className="Num-m-text">{date.getMonth() + 1}</span>
         </div>
-        <span className="En-y-m">{date.getFullYear()} {date.toLocaleString("en-US", { month: "long" })}</span>
+        <span className="En-y-m">
+          {date.getFullYear()} {date.toLocaleString("en-US", { month: "long" })}
+        </span>
       </header>
 
       {/* 캘린더와 네비게이션 버튼을 감싼 컨테이너 */}
@@ -102,26 +107,33 @@ const Monthly = () => {
 
             // 할 일 아이콘 박스 추가
             if (todos[tileDateString]) {
-              classNames += todos[tileDateString].completed
-                ? " todo-completed"
-                : " todo-pending";
+              classNames += todos[tileDateString].completed ? " todo-completed" : " todo-pending";
             }
 
             return classNames.trim();
           }}
           tileContent={({ date: tileDate, view }) => {
             const tileDateString = tileDate.toISOString().split("T")[0]; // 날짜 문자열
-            if (todos[tileDateString]) {
-              return (
-                <div className="icon-box">
-                  {todos[tileDateString].completed ? (
-                    <span className="icon-completed">✔️</span>
+            return (
+              <div className="date-content">
+                <span className="date-label">{tileDate.getDate()}</span>
+                <div className={`icon-box ${todos[tileDateString] ? "has-todo" : "no-todo"}`}>
+                  {todos[tileDateString] ? (
+                    todos[tileDateString].completed ? (
+                      <figure className="icon-completed">
+                        <img src="/assets/poc_icon_cake.png" alt="icon-cake" />
+                      </figure>
+                    ) : (
+                      <figure className="icon-missed">
+                        <img src="/assets/poc_icon_fork.png" alt="icon-fork" />
+                      </figure>
+                    )
                   ) : (
-                    <span className="icon-pending">❌</span>
+                    <figure className="icon-placeholder">⚪</figure>
                   )}
                 </div>
-              );
-            }
+              </div>
+            );
           }}
         />
         <button className="next-month-button" onClick={nextMonth}>〉</button>
