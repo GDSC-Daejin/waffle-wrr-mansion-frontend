@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig"; 
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
 
+const colorPalette = [
+  ["#FFEBCC"], // category-1 색상 세트
+  ["#FFBCD4"], // category-2 색상 세트
+  ["#FFD1D8"], // category-3 색상 세트
+  ["#D5EDCC"], // category-4 색상 세트
+  ["#B4E5E0"], // category-5 색상 세트
+  ["#E2DFFF"] // category-6 색상 세트
+];
+
 const Todo = ({ date }) => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
@@ -40,14 +49,23 @@ const Todo = ({ date }) => {
 
   const addCategory = async () => {
     if (!newCategory.trim()) return;
+    if (categories.length >= 6) { // 카테고리 최대 6개 제한
+      alert("카테고리는 최대 6개만 추가할 수 있습니다.");
+      return;
+    }
+  
+    // 색상 배열에서 색상 가져오기
+    const categoryColor = colorPalette[categories.length]; // 색상은 카테고리 개수 순으로 설정
+  
     try {
       const docRef = await addDoc(collection(db, "categories"), {
         name: newCategory.trim(),
         date,
+        color: categoryColor, // 색상 추가
       });
       setCategories(prevCategories => [
         ...prevCategories,
-        { id: docRef.id, name: newCategory.trim(), date },
+        { id: docRef.id, name: newCategory.trim(), date, color: categoryColor }, // 색상 포함
       ]);
       setNewCategory("");
       setShowCategoryInput(false);
@@ -55,9 +73,14 @@ const Todo = ({ date }) => {
       console.error("Error adding category:", error);
     }
   };
-
+    
   const addTodo = async (categoryId) => {
     if (!newTodo.trim()) return;
+    const categoryTodos = todos.filter(todo => todo.categoryId === categoryId);
+    if (categoryTodos.length >= 10) { // 한 카테고리당 할 일 최대 10개 제한
+      alert("이 카테고리는 최대 10개의 할 일만 추가할 수 있습니다.");
+      return;
+    }
     try {
       const docRef = await addDoc(collection(db, "todos"), {
         categoryId,
@@ -247,8 +270,8 @@ const Todo = ({ date }) => {
           )}
 
           {categories.map((category) => (
-            <div key={category.id} className="category">
-              <h3>{category.name}</h3>
+            <div key={category.id} className="category" 
+            style={{ backgroundColor: category.color }}>              <h3>{category.name}</h3>
               <div>
                 <input
                   type="text"
@@ -261,7 +284,7 @@ const Todo = ({ date }) => {
 
               <ul>
                 {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
-                  <li key={todo.id}>
+                  <li key={todo.id} style={{ backgroundColor: category.color }}>
                     <input
                       type="text"
                       value={todo.text}
