@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../config/firebaseConfig"; // db 가져오기
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; // 필요한 Firestore 메서드들
+import { db } from "../config/firebaseConfig"; 
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
 
 const Todo = ({ date }) => {
   const [todos, setTodos] = useState([]);
@@ -8,79 +8,54 @@ const Todo = ({ date }) => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const [showCategoryInput, setShowCategoryInput] = useState(false);
+  const [currentTab, setCurrentTab] = useState("doing");
 
-  // 해당 날짜에 해당하는 todo 데이터를 Firebase에서 불러오는 함수
   const fetchTodos = async () => {
-    const q = query(
-      collection(db, "todos"),
-      where("date", "==", date) // 날짜가 일치하는 todo만 가져옴
-    );
+    const q = query(collection(db, "todos"), where("date", "==", date));
     try {
       const querySnapshot = await getDocs(q);
       const todosData = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      setTodos(todosData); // 받아온 데이터를 todos 상태에 저장
+      setTodos(todosData);
     } catch (error) {
       console.error("Error fetching todos:", error);
     }
   };
 
-  // Firebase에서 카테고리 목록을 불러오는 함수
   const fetchCategories = async () => {
-    const q = query(collection(db, "categories"),
-    where("date", "==", date) // 날짜가 일치하는 카테고리만 가져옴
-  );
+    const q = query(collection(db, "categories"), where("date", "==", date));
     try {
       const querySnapshot = await getDocs(q);
       const categoriesData = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      setCategories(categoriesData); // 받아온 카테고리 데이터를 상태에 저장
+      setCategories(categoriesData);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   };
 
-  // 카테고리 추가 함수
   const addCategory = async () => {
     if (!newCategory.trim()) return;
     try {
       const docRef = await addDoc(collection(db, "categories"), {
         name: newCategory.trim(),
-        date, // 날짜를 저장
+        date,
       });
       setCategories(prevCategories => [
         ...prevCategories,
         { id: docRef.id, name: newCategory.trim(), date },
       ]);
-      setNewCategory(""); // 입력창 초기화
-      setShowCategoryInput(false); // 입력창 닫기
+      setNewCategory("");
+      setShowCategoryInput(false);
     } catch (error) {
       console.error("Error adding category:", error);
     }
   };
 
-    // 카테고리 삭제 함수
-    const deleteCategory = async (categoryId) => {
-      try {
-        // 해당 카테고리에 속한 할 일들도 삭제
-        const categoryTodos = todos.filter(todo => todo.categoryId === categoryId);
-        categoryTodos.forEach(async (todo) => {
-          await deleteDoc(doc(db, "todos", todo.id)); // 할 일 삭제
-        });
-  
-        // 카테고리 삭제
-        await deleteDoc(doc(db, "categories", categoryId));
-        setCategories(categories.filter(category => category.id !== categoryId)); // 상태에서 카테고리 제거
-      } catch (error) {
-        console.error("Error deleting category:", error);
-      }
-    };
-
-  // 할 일 추가 함수
   const addTodo = async (categoryId) => {
     if (!newTodo.trim()) return;
     try {
@@ -88,110 +63,285 @@ const Todo = ({ date }) => {
         categoryId,
         text: newTodo,
         completed: false,
-        date, // 날짜를 저장
+        date,
       });
       setTodos(prevTodos => [
         ...prevTodos,
         { id: docRef.id, categoryId, text: newTodo, completed: false, date },
-      ]); // 새 할 일을 상태에 추가
-      setNewTodo(""); // 입력창 초기화
+      ]);
+      setNewTodo("");
     } catch (error) {
       console.error("Error adding todo:", error);
     }
   };
 
-  // 할 일 완료 처리
   const toggleComplete = async (todoId) => {
     try {
       const todoRef = doc(db, "todos", todoId);
       const updatedTodos = todos.map(todo =>
-        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+        todo.id === todoId ? { ...todo, completed: true } : todo // completed를 true로 설정
       );
-      await updateDoc(todoRef, { completed: !updatedTodos.find(t => t.id === todoId).completed });
-      setTodos(updatedTodos); // 완료 처리된 후 상태 업데이트
+  
+      // Firebase에서 완료 상태 업데이트
+      await updateDoc(todoRef, { completed: true });
+  
+      // 상태 업데이트
+      setTodos(updatedTodos);
+    } catch (error) {
+      console.error("Error updating todo:", error);
+    }
+  };
+  const toggleUnComplete = async (todoId) => {
+    try {
+      const todoRef = doc(db, "todos", todoId);
+      const updatedTodos = todos.map(todo =>
+        todo.id === todoId ? { ...todo, completed: false } : todo // completed를 false 설정
+      );
+  
+      // Firebase에서 완료 상태 업데이트
+      await updateDoc(todoRef, { completed: false });
+  
+      // 상태 업데이트
+      setTodos(updatedTodos);
     } catch (error) {
       console.error("Error updating todo:", error);
     }
   };
 
-  // 할 일 삭제
+
+  const deleteCategory = async (categoryId) => {
+    try {
+      const categoryTodos = todos.filter(todo => todo.categoryId === categoryId);
+      categoryTodos.forEach(async (todo) => {
+        await deleteDoc(doc(db, "todos", todo.id));
+      });
+      await deleteDoc(doc(db, "categories", categoryId));
+      setCategories(categories.filter(category => category.id !== categoryId));
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    }
+  };
+
   const deleteTodo = async (todoId) => {
     try {
       await deleteDoc(doc(db, "todos", todoId));
-      setTodos(todos.filter(todo => todo.id !== todoId)); // 삭제된 할 일 상태에서 제거
+      setTodos(todos.filter(todo => todo.id !== todoId));
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
   };
 
-  // 카테고리 입력 시 이벤트 처리
+  const saveEdit = () => {
+    // 모든 카테고리 수정
+    categories.forEach((category) => {
+      if (category.isEditing) {
+        categorySaveEdit(category.id, category.name); // 카테고리 이름 수정
+      }
+    });
+  
+    // 모든 할 일 수정
+    todos.forEach((todo) => {
+      if (todo.isEditing) {
+        todoSaveEdit(todo.id, todo.text); // 할 일 텍스트 수정
+      }
+    });
+  };
+  
+  const categorySaveEdit = async (categoryId, newCategoryName) => {
+    try {
+      const categoryRef = doc(db, "categories", categoryId);
+      await updateDoc(categoryRef, { name: newCategoryName });
+  
+      // 상태 업데이트: 카테고리 이름 수정
+      const updatedCategories = categories.map(category =>
+        category.id === categoryId ? { ...category, name: newCategoryName, isEditing: false } : category
+      );
+      setCategories(updatedCategories);
+    } catch (error) {
+      console.error("Error saving category edit:", error);
+    }
+  };
+  const todoSaveEdit = async (todoId, newText) => {
+    try {
+      const todoRef = doc(db, "todos", todoId);
+      await updateDoc(todoRef, { text: newText });
+  
+      // 상태 업데이트: 할 일 텍스트 수정
+      const updatedTodos = todos.map(todo =>
+        todo.id === todoId ? { ...todo, text: newText, isEditing: false } : todo
+      );
+      setTodos(updatedTodos);
+    } catch (error) {
+      console.error("Error saving todo edit:", error);
+    }
+  };
+  
+
+  const handleTodoChange = (e, todoId) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === todoId ? { ...todo, text: e.target.value } : todo
+    );
+    setTodos(updatedTodos);
+  };
+
+  const handleCategoryChange = (e, categoryId) => {
+    const updatedCategories = categories.map(category =>
+      category.id === categoryId ? { ...category, name: e.target.value } : category
+    );
+    setCategories(updatedCategories);
+  };
+
   const handleKeyDownCategory = (e) => {
     if (e.key === "Enter") {
-      addCategory();  // Enter 키로 카테고리 추가
+      addCategory();
     }
   };
 
-  // 할 일 입력 시 이벤트 처리
   const handleKeyDownTodo = (e, categoryId) => {
     if (e.key === "Enter") {
-      addTodo(categoryId);  // Enter 키로 할 일 추가
+      addTodo(categoryId);
     }
   };
 
-  // 컴포넌트가 마운트될 때 Firebase에서 데이터 불러오기
   useEffect(() => {
     fetchTodos();
     fetchCategories();
-  }, [date]); // 날짜가 변경될 때마다 다시 데이터를 불러옴
+  }, [date]);
 
   return (
     <div className="todo-container">
-      <h2>{date}의 할 일</h2>
+      <div>
+        <button onClick={() => setCurrentTab("doing")}>해야 할 일</button>
+        <button onClick={() => setCurrentTab("completed")}>완료</button>
+        <button onClick={() => {
+          setCurrentTab("edit");
 
-      {/* 카테고리 추가 */}
-      <button onClick={() => setShowCategoryInput(true)}>+ 카테고리 추가</button>
-      {showCategoryInput && (
-        <div>
-          <input
-            type="text"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
-            onKeyDown={handleKeyDownCategory} // Enter로 카테고리 추가
-            placeholder="새 카테고리 입력"
-          />
-          <button onClick={() => deleteCategory(categories.id)}>삭제</button>
+          const updatedTodos = todos.map(todo => ({
+            ...todo,
+            isEditing: true,  // 모든 할 일 항목을 수정 가능 상태로 설정
+          }));
 
-        </div>
+          const updatedCategories = categories.map(category => ({
+            ...category,
+            isEditing: true,  // 모든 카테고리 항목을 수정 가능 상태로 설정
+          }));
+
+          setTodos(updatedTodos);  // 상태 업데이트
+          setCategories(updatedCategories);  // 카테고리도 수정 가능 상태로 설정
+        }}>✏️</button>
+      </div>
+
+      {currentTab === "doing" && (
+        <article className="doing-container">
+          <button onClick={() => setShowCategoryInput(true)}>+ 카테고리 추가</button>
+          {showCategoryInput && (
+            <div>
+              <input
+                type="text"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                onKeyDown={handleKeyDownCategory}
+                placeholder="새 카테고리 입력"
+              />
+            </div>
+          )}
+
+          {categories.map((category) => (
+            <div key={category.id} className="category">
+              <h3>{category.name}</h3>
+              <div>
+                <input
+                  type="text"
+                  value={newTodo}
+                  onChange={(e) => setNewTodo(e.target.value)}
+                  onKeyDown={(e) => handleKeyDownTodo(e, category.id)}
+                  placeholder="할 일 입력"
+                />
+              </div>
+
+              <ul>
+                {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
+                  <li key={todo.id}>
+                    <input
+                      type="text"
+                      value={todo.text}
+                      onChange={(e) => handleTodoChange(e, todo.id)}
+                    />
+                    <button onClick={() => toggleComplete(todo.id)}>❤️</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </article>
       )}
 
-      {/* 카테고리별 할 일 목록 */}
-      {categories.map((category) => (
-        <div key={category.id} className="category">
-          <h3>{category.name}</h3>
-          <div>
+{currentTab === "completed" && (
+  <article className="completed-container">
+    {categories.map((category) => (
+      <div key={category.id} className="category">
+        <h3>{category.name}</h3>
+        <ul>
+          {todos
+            .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
+            .map((todo) => (
+              <li key={todo.id}>
+                <span>{todo.text}</span>
+                <button onClick={() => toggleUnComplete(todo.id)}>💔</button> {/* 완료 취소 버튼 */}
+              </li>
+            ))}
+        </ul>
+      </div>
+    ))}
+  </article>
+)}
+
+
+{currentTab === "edit" && (
+  <article className="edit-container">
+    {/* 상단에 한 개의 저장 버튼만 위치 */}
+    <button onClick={saveEdit}>저장</button>
+
+    {categories.map((category) => (
+      <div key={category.id} className="category">
+        {category.isEditing ? (
+          <>
             <input
               type="text"
-              value={newTodo}
-              onChange={(e) => setNewTodo(e.target.value)}
-              onKeyDown={(e) => handleKeyDownTodo(e, category.id)} // Enter로 할 일 추가
-              placeholder="할 일 입력"
+              value={category.name}
+              onChange={(e) => handleCategoryChange(e, category.id)}
             />
-            <button onClick={() => addTodo(category.id)}>+</button>
-          </div>
+          </>
+        ) : (
+          <h3>{category.name}</h3>
+        )}
+        <button onClick={() => deleteCategory(category.id)}>삭제</button>
 
-          {/* 할 일 목록 */}
-          <ul>
-            {todos.filter(todo => todo.categoryId === category.id).map((todo) => (
-              <li key={todo.id} className={todo.completed ? "completed" : ""}>
-                <span onClick={() => toggleComplete(todo.id)}>
-                  {todo.completed ? "✔️" : "⭕"} {todo.text}
-                </span>
+        {/* 할 일 출력 */}
+        <ul>
+          {todos
+            .filter(todo => todo.categoryId === category.id)
+            .map((todo) => (
+              <li key={todo.id}>
+                {todo.isEditing ? (
+                  <>
+                    <input
+                      type="text"
+                      value={todo.text}
+                      onChange={(e) => handleTodoChange(e, todo.id)}
+                    />
+                  </>
+                ) : (
+                  <span>{todo.text}</span>
+                )}
                 <button onClick={() => deleteTodo(todo.id)}>삭제</button>
               </li>
             ))}
-          </ul>
-        </div>
-      ))}
+        </ul>
+      </div>
+    ))}
+  </article>
+)}
     </div>
   );
 };
