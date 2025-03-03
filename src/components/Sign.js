@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../config/firebaseConfig"; // Firebase 설정 파일
+import { auth } from "../config/firebaseConfig"; // Firebase 설정 파일
+import { Users } from "../components/Users"; // 유저 생성 함수
 
 export const handleGoogleLogin = async (setUserData, navigate) => {
   const provider = new GoogleAuthProvider();
@@ -8,19 +8,13 @@ export const handleGoogleLogin = async (setUserData, navigate) => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    const userId = user.uid;
 
-    // Firestore에 사용자 프로필 생성 (users/{userId})
-    const userRef = doc(db, "users", userId);
-    await setDoc(userRef, {
-      name: user.displayName,
-      email: user.email,
-      joinedAt: new Date(),
-    });
+    // Firestore에 사용자 프로필이 없으면 생성 (가입 날짜 추가됨)
+    await Users(user);
 
     // 로그인한 사용자 데이터 상태 업데이트
     setUserData({
-      uid: userId,
+      uid: user.uid,
       name: user.displayName,
       email: user.email,
     });
