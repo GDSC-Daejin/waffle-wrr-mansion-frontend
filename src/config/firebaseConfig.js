@@ -1,11 +1,10 @@
-// Import the functions you need from the SDKs you need
+// Firebase SDK에서 필요한 기능 가져오기
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";  // 인증 추가
+import { getFirestore } from "firebase/firestore";  // Firestore 추가
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase 설정
 const firebaseConfig = {
   apiKey: "AIzaSyAiT_t07K5sFChhVLqQzBeL2RXpm-1I5c4",
   authDomain: "waffle-wrr-mansion.firebaseapp.com",
@@ -17,6 +16,12 @@ const firebaseConfig = {
   measurementId: "G-S6CLC1LMR5"
 };
 
-// Initialize Firebase
+// Firebase 초기화
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);  // 인증 인스턴스 생성
+const db = getFirestore(app);  // Firestore 인스턴스 생성
+const analytics = getAnalytics(app);  // Analytics 초기화 (선택)
+
+// `auth`와 `db`를 export
+export { auth, db };
+export default app;
