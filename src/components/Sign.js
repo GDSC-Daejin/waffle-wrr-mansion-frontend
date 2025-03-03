@@ -5,6 +5,11 @@ import { Users } from "../components/Users"; // 유저 생성 함수
 export const handleGoogleLogin = async (setUserData, navigate) => {
   const provider = new GoogleAuthProvider();
 
+    // 계정 선택 창 강제
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
+
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
