@@ -1,7 +1,5 @@
 /* user-header 아래에 모달 추가 */
 .user-header {
-  background-color: transparent !important;
-  box-shadow: none !important;
   display: flex; /* 플렉스 박스를 사용하여 정렬 */
   justify-content: flex-end; /* 오른쪽 끝에 배치 */
 }
@@ -10,9 +8,11 @@
   font-family: 'SUIT Variable', sans-serif;
   font-size: 1.2rem;
   color: #3F2D20;
+  padding-top: 5px;
 }
 
 .user-profile-img {
+    margin-left: 1rem;
   width: 2rem;
 }
 
@@ -148,6 +148,8 @@
     text-align: center; /* 텍스트 가운데 정렬 */
     padding: 20px; /* 적당한 여백 추가 */
     line-height: 2; /* 기본 행간 설정 */
+    font-family: "SUIT Variable";
+    font-size: 1rem;
   }
   
   .delete-message .image-container {

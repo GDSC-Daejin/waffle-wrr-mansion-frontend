@@ -1,67 +1,66 @@
-/* Daily.css */
 .user-header {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 8px 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}  
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  padding: 20px 30px;  /* 우측 여백 40px 추가 */
+  z-index: 100;
+}
+/* 전체 레이아웃 */
 .daily-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 10px;
-    width: 100%;
-    height: 100vh;
-    padding: 20px;
-    background-color: #f4f4f4;
-  }
-  
-  .daily-top, .daily-bottom {
-    display: contents;
-  }
-  
-  .time-tracker {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    background-color: #f8d7da;
-    padding: 20px;
-    border-radius: 100%;
-  }
-  
-  .task-manager {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3; /* 2,5번 세로 합침 */
-    background-color: #d1ecf1;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .mini-monthly {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-    background-color: #d4edda;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .memo {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    background-color: #fff3cd;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .photo-album {
-    grid-column: 3 / 4;
-    grid-row: 2 / 3;
-    background-color: #e2e3e5;
-    padding: 20px;
-    border-radius: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px; /* 고정된 헤더의 아래 여백 */
+}
+
+.daily-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 20px; /* 헤더와의 간격 */
+}
+
+/* 2. 좌측 (Aside) */
+.daily-aside {
+  flex: 1; /* 좌측 컴포넌트가 1:1 비율로 차지 */
+  padding-right: 20px;
+}
+
+.daily-aside .time-tracker, .daily-aside .notes {
+  margin-bottom: 20px;
+}
+
+/* 3. 중앙 (Main) */
+.daily-main {
+  flex: 2; /* 중앙은 우측보다 넓게 */
+  padding: 20px;
+  margin: 0 20px; /* 좌우 여백 */
+}
+
+.daily-main .todo-list {
+  margin-top: 20px;
+}
+
+/* 4. 우측 (Bside) */
+.daily-bside {
+  flex: 1; /* 우측 컴포넌트가 1:1 비율로 차지 */
+  padding-left: 20px;
+}
+
+.daily-bside .mini-monthly, .daily-bside .photo-gallery {
+  margin-bottom: 20px;
+}
+
+/* MiniMonthly (기존 Monthly.js 활용) */
+.mini-monthly {
+  /* 필요한 스타일 추가 */
+  width: 100%;
+  height: auto;
+}
+
+/* PhotoGallery */
+.photo-gallery {
+  /* 필요한 스타일 추가 */
+  width: 100%;
+  height: auto;
+}

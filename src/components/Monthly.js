@@ -1,12 +1,12 @@
+//Monthly.js
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
-import { auth} from "../config/firebaseConfig"; // Firebase 인증 가져오기
-//import { signOut } from "firebase/auth";
+import { auth } from "../config/firebaseConfig"; // Firebase 인증 가져오기
 import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Monthly.css"; 
-import UserModal from "../components/UserModal"; 
+import "../styles/Monthly.css";
+import UserModal from "../components/UserModal";
 
 const Monthly = () => {
   const [date, setDate] = useState(new Date());
@@ -26,7 +26,7 @@ const Monthly = () => {
 
   const handleDateClick = (selectedDate) => {
     const formattedDate = format(selectedDate, "yyyy-MM-dd");
-    navigate(`/daily/${formattedDate}`);
+    navigate(`/daily/${formattedDate}`); // 날짜를 URL로 전달
   };
 
   const prevMonth = () => {

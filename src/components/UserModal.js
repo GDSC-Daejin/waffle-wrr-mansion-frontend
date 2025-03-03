@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { auth } from "../config/firebaseConfig";
 import MypageModal from "./MypageModal";
 import DeleteAccountModal from "./DeleteAccountModal";
 
