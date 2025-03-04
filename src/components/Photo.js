@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 const Photo = () => {
-  const [isDragging, setIsDragging] = useState(false);
   const [image, setImage] = useState(null);
+  const [hover, setHover] = useState(false);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -16,69 +16,74 @@ const Photo = () => {
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "333.87px",
-        height: "371.2px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: isDragging ? "2px dashed #ff7eb3" : "none",
-        transition: "border 0.3s ease-in-out"
-      }}
-      onDragOver={(e) => {
-        e.preventDefault();
-        setIsDragging(true);
-        console.log("Dragging started");
-      }}
-      onDragLeave={() => {
-        setIsDragging(false);
-        console.log("Dragging ended");
-      }}
-      onDrop={(e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const file = e.dataTransfer.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setImage(reader.result);
-          };
-          reader.readAsDataURL(file);
-        }
-      }}
-    >
-      {image ? (
-        <img
-          src={image}
-          alt="uploaded"
-          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "8px" }}
-        />
-      ) : isDragging ? (
-        <img
-          src="/blur_strawberry.png"
-          alt="Drag Icon"
-          style={{ width: "333.87px", height: "371.2px", position: "absolute" }}
-        />
-      ) : (
-        <label htmlFor="fileInput" style={{ cursor: "pointer", fontSize: "20px", fontWeight: "bold" }}>
-          사진
-        </label>
-      )}
+    <div className="relative flex justify-center items-center">
+      {/* 이미지 업로드 버튼 */}
+      <label
+        className="relative cursor-pointer"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        {image ? (
+          <div className="w-[333.87px] h-[371.2px] overflow-hidden rounded-[20px] bg-gray-200">
+            <img
+              src={image}
+              alt="Uploaded"
+              className="w-full h-full object-cover" // 비율을 유지하며 자르기
+            />
+          </div>
+        ) : (
+          <div className="w-[333.87px] h-[371.2px] flex justify-center items-center bg-gray-200 rounded-[20px]">
+            <span
+              className="text-[64px] font-bold"
+              style={{
+                color: "#FFFFFF",
+                textShadow: "4px 4px 0px #5C4033",
+              }}
+            >
+              사진
+            </span>
+          </div>
+        )}
 
-      <input
-        type="file"
-        id="fileInput"
-        accept="image/*"
-        style={{ display: "none" }}
-        onChange={handleImageUpload}
-      />
+        {/* 드래그 시 "+ 사진 넣기" 표시 */}
+        {!image && hover && (
+          <div className="absolute inset-0 flex justify-center items-center">
+            <span
+              className="text-[64px] font-bold"
+              style={{
+                color: "#FFFFFF",
+                textShadow: "4px 4px 0px #5C4033",
+              }}
+            >
+              + 사진 넣기
+            </span>
+          </div>
+        )}
+
+        {/* 파일 입력 필드 */}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleImageUpload}
+        />
+      </label>
     </div>
   );
 };
 
 export default Photo;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
