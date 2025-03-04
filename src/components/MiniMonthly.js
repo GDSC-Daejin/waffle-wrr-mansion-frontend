@@ -60,7 +60,6 @@ const MiniMonthly = () => {
             const currentMonth = date.getMonth(); // 현재 선택된 달
             const tileMonth = tileDate.getMonth(); // 각 날짜의 달
             const day = tileDate.getDay(); // 요일 구하기
-            const tileDateString = tileDate.toISOString().split("T")[0]; // 날짜 문자열
 
             let classNames = "";
 
@@ -77,10 +76,9 @@ const MiniMonthly = () => {
             return classNames.trim();
           }}
           tileContent={({ date: tileDate, view }) => {
-            const tileDateString = format(new Date(tileDate).setHours(0, 0, 0, 0), "yyyy-MM-dd");
             return (
-              <div className="date-content">
-                <span className="date-label">{tileDate.getDate()}</span>
+              <div className="mini-date-content">
+                <span className="mini-date-label">{tileDate.getDate()}</span>
               </div>
             );
           }}

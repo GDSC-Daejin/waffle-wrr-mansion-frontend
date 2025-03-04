@@ -105,22 +105,23 @@
  .react-calendar__month-view__weekdays{
   font-family: 'SUIT Variable', sans-serif;
   font-weight: 600;
-  font-size: 2.78vh; /* 반응형 폰트 크기 */
+  font-size: 2.5vh ; /* 반응형 폰트 크기 */
   color: #FAFAFA;
-  height: 8.6vh;
+  height: 7.1vh;
   width: 100%;
  }
  .react-calendar__month-view__weekdays__weekday {
   text-align: center;
   padding: 5px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
   background-color: #FF6B81;
   display: flex;
   align-items: center; /* 수직 중앙 정렬 */
   justify-content: center; /* 수평 중앙 정렬 */
   
 }
+
 
 .react-calendar__month-view__weekdays__weekday abbr{
   text-decoration: none;
@@ -132,8 +133,8 @@
   padding: 10px;
   cursor: pointer;
   background-color: #FFFBE1;
-  height: 12vh;
-  width: auto;
+  max-height: 12vh;
+  max-width: auto;
   position: relative; /* 날짜와 아이콘을 배치하기 위해 필요 */
   border: 1.6px dashed #FFE7EE !important; /* 점선 외곽선 추가 */
 
@@ -147,22 +148,22 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 12vh;
 }
 
 .date-label {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 10%;
+  left: 10%;
   font-size: 1.8rem;
   padding: 1.2px; /* 내부 여백 추가 (배경을 키우는 역할) */
   border-radius: 100%;  /* 동그라미 모양 */
   width: 1.75rem;         /* 너비 */
   height: 1.75rem;        /* 높이 */
   line-height: 1.75rem;   /* 세로 중앙 정렬 */
-  text-align: center;     /* 가로 중앙 정렬 */
-  transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
-}
+  text-align: center;  /* 가로 중앙 정렬 */
 
+}
 
 .sunday {
   color: #E63946;
@@ -197,6 +198,7 @@
   width: 2.5rem;
   height: 2.5rem;
   display: flex;
+  margin-top: 20px;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
@@ -214,7 +216,7 @@
 
 
 .icon img{
-  width: 3rem;
+  width: 3.5rem;
 }
 
 
