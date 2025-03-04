@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig"; 
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
+import "../styles/Todo.css";
 
 const colorPalette = [
   ["#FFEBCC"], // category-1 색상 세트
@@ -96,6 +97,7 @@ const Todo = ({ date }) => {
         { id: docRef.id, categoryId, text: newTodo, completed: false, date },
       ]);
       setNewTodo("");
+      setShowCategoryInput(false);
     } catch (error) {
       console.error("Error adding todo:", error);
     }
@@ -300,8 +302,8 @@ const Todo = ({ date }) => {
             </div>
           )}
 
-          {categories.map((category) => (
-            <div key={category.id} className="category" 
+          {categories.map((category, index) => (
+            <div key={category.id} className={`category category-${index + 1}`} 
             style={{ backgroundColor: category.color }}>              
             <h3>{category.name}</h3>
               <div>
@@ -316,7 +318,7 @@ const Todo = ({ date }) => {
 
               <ul>
                 {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
-                  <li key={todo.id} style={{ backgroundColor: category.color }}>
+                  <li key={todo.id} className={`category-${index + 1}`} style={{ backgroundColor: category.color }}>
                     <input
                       type="text"
                       value={todo.text}
@@ -333,15 +335,15 @@ const Todo = ({ date }) => {
 
 {currentTab === "completed" && (
   <article className="completed-container">
-    {categories.map((category) => (
-      <div key={category.id} className="category" 
+    {categories.map((category, index) => (
+      <div key={category.id} className={`category category-${index + 1}`} 
       style={{ backgroundColor: category.color }}>              
       <h3>{category.name}</h3>
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
             .map((todo) => (
-              <li key={todo.id} style={{ backgroundColor: category.color }}>
+              <li key={todo.id} className={`category category-${index + 1}`}style={{ backgroundColor: category.color }}>
                 <span>{todo.text}</span>
                 <button onClick={() => toggleUnComplete(todo.id)}>💔</button> {/* 완료 취소 버튼 */}
               </li>
@@ -358,8 +360,8 @@ const Todo = ({ date }) => {
     {/* 상단에 한 개의 저장 버튼만 위치 */}
     <button onClick={saveEdit}>저장</button>
 
-    {categories.map((category) => (
-      <div key={category.id} className="category" 
+    {categories.map((category, index) => (
+      <div key={category.id} className={`category category-${index + 1}`}
       style={{ backgroundColor: category.color }}> 
         {category.isEditing ? (
           <>
@@ -379,7 +381,7 @@ const Todo = ({ date }) => {
           {todos
             .filter(todo => todo.categoryId === category.id)
             .map((todo) => (
-              <li key={todo.id} style={{ backgroundColor: category.color }}>
+              <li key={todo.id} className={`category category-${index + 1}`}style={{ backgroundColor: category.color }}>
                 {todo.isEditing ? (
                   <>
                     <input

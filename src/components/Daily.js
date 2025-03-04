@@ -44,8 +44,12 @@ const Daily = () => {
       <div className="daily-content">
         {/* 2. 좌측 Aside */}
         <aside className="daily-aside">
+        <article className="time-tracker">
           <TimeTracker date={date} />
+          </article>
+        <article className="memo-pad">
           <MemoPad date={date} />
+        </article>
         </aside>
 
         {/* 3. 중앙 Main */}
@@ -58,7 +62,9 @@ const Daily = () => {
           <article className="mini-monthly">
           <MiniMonthly date={date} />
           </article>
+          <article className="photo-gallery">
           <PhotoGallery date={date} />
+          </article>
         </aside>
       </div>
     </div>
