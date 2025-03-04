@@ -45,7 +45,7 @@ const DeleteAccountModal = ({ user, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <article className="user-modal" onClick={(e) => e.stopPropagation()}>
         <header className="modal-header">
-          <h2 className="modal-title">회원 탈퇴</h2>
+          <h2 className="modal-title">my page</h2>
           <button className="close-btn" onClick={onClose} aria-label="Close modal">X</button>
         </header>
 
@@ -53,14 +53,11 @@ const DeleteAccountModal = ({ user, onClose }) => {
           <article className="delete-message">
             <div className="image-container">
               <img src="/assets/poc_user_delete.png" alt="User Delete" />
-              <span>에서</span>
+              <span className="in">에서</span>
             </div>
-            <span>
-              <br />
-              {user?.displayName || "사용자"}님의 목표를 이루었어요!<br />
-              지금까지 쌓아온 달콤한 기록들이 모두 사라집니다.<br />
-              그래도 정말 떠나시겠어요?
-            </span>
+            <span>  지금까지 쌓아온 달콤한 기록들이 모두 사라집니다.</span>
+            <span className="last-question">  그래도 정말 떠나시겠어요?</span>
+            
           </article>
           <button className="logout-btn" onClick={handleDeleteAccount} aria-label="Delete Account">
             회원 탈퇴

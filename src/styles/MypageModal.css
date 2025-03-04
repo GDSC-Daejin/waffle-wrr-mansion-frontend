@@ -137,7 +137,6 @@
   border-radius: 80px;
   cursor: pointer;
   border: none;
-
 }
 
 
@@ -152,7 +151,9 @@
     font-family: "SUIT Variable";
     font-size: 1rem;
   }
-  
+  .in{
+    padding-top: 10px;
+  }
   .delete-message .image-container {
     display: flex;
     align-items: center; /* 이미지와 '에서'가 수평 정렬되도록 설정 */
@@ -161,17 +162,18 @@
   .delete-message img {
     margin-right: 5px; /* 이미지와 '에서' 사이 간격 추가 */
     width: 169.6px;
+    margin-bottom: 5px;
   }
   
-  .delete-message span {
-    display: block; /* 텍스트 부분이 세로로 쌓이게 설정 */
-  }
+
   
 .image-container {
     display: flex;
     align-items: center; /* 이미지와 '에서'가 수평 정렬되도록 설정 */
 }
   
-
+.last-question{
+  font-weight: 600;
+}
 
   

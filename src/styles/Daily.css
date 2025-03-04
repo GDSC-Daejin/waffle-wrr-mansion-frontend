@@ -32,9 +32,10 @@
   flex: 1; /* 좌측 컴포넌트가 1:1 비율로 차지 */
   padding-right: 20px;
 }
-.time-tracker{
+.time-tracker-box{
   background-color: #FFFBF1;
   border-radius: 28.8px;
+  border: 12px solid #FFE3D6;
 }
 .memo-pad{
   background-color: #FFFBF1;

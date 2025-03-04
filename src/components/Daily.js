@@ -44,9 +44,9 @@ const Daily = () => {
       <div className="daily-content">
         {/* 2. 좌측 Aside */}
         <aside className="daily-aside">
-        <article className="time-tracker">
+        <article className="time-tracker-box">
           <TimeTracker date={date} />
-          </article>
+        </article>
         <article className="memo-pad">
           <MemoPad date={date} />
         </article>

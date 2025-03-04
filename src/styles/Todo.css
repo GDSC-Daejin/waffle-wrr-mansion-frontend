@@ -1,37 +1,157 @@
 /* 색상 세트 정의 */
+:root {
+  /* 1번 카테고리 색상 세트 */
+  --category-1-highlight: #FDF3E3;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-1-text-color: #DEBEAF;  /* 글자색 */
+  --category-1-dotted-border: #FCF6EC;  /* 점선 */
+  --category-1-solid-border: #FDF3E3;  /* 실선 */
+  --category-1-heart: #FDF3E3;  /* 하트 이모지 배경색 */
+  --category-1-border: #FFEBCC;  /* 테두리 */
+
+  /* 2번 카테고리 색상 세트 */
+  --category-2-highlight: #FDDBE7;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-2-text-color: #DEAFC8;  /* 글자색 */
+  --category-2-dotted-border: #FCE7EF;  /* 점선 */
+  --category-2-solid-border: #FDDBE7;  /* 실선 */
+  --category-2-heart: #FDDBE7;  /* 하트 이모지 배경색 */
+  --category-2-border: #FFBCD4;  /* 테두리 */
+
+  /* 3번 카테고리 색상 세트 */
+  --category-3-highlight: #FDE5E9;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-3-text-color: #DEAFBA;  /* 글자색 */
+  --category-3-dotted-border: #FCEEF0;  /* 점선 */
+  --category-3-solid-border: #FDE5E9;  /* 실선 */
+  --category-3-heart: #FDE5E9;  /* 하트 이모지 배경색 */
+  --category-3-border: #FFD1D8;  /* 테두리 */
+
+  /* 4번 카테고리 색상 세트 */
+  --category-4-highlight: #E7F3E3;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-4-text-color: #C5DEAF;  /* 글자색 */
+  --category-4-dotted-border: #EFF6EC;  /* 점선 */
+  --category-4-solid-border: #E7F3E3;  /* 실선 */
+  --category-4-heart: #E7F3E3;  /* 하트 이모지 배경색 */
+  --category-4-border: #D5EDCC;  /* 테두리 */
+
+  /* 5번 카테고리 색상 세트 */
+  --category-5-highlight: #D7EFED;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-5-text-color: #AFDBDE;  /* 글자색 */
+  --category-5-dotted-border: #E5F4F2;  /* 점선 */
+  --category-5-solid-border: #D7EFED;  /* 실선 */
+  --category-5-heart: #D7EFED;  /* 하트 이모지 배경색 */
+  --category-5-border: #B4E5E0;  /* 테두리 */
+
+  /* 6번 카테고리 색상 세트 */
+  --category-6-highlight: #EEEBF8;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-6-text-color: #CAAFDE;  /* 글자색 */
+  --category-6-dotted-border: #F3F1F9;  /* 점선 */
+  --category-6-solid-border: #EEEBF8;  /* 실선 */
+  --category-6-heart: #EEEBF8;  /* 하트 이모지 배경색 */
+  --category-6-border: #E2DFFF;  /* 테두리 */
+}
+
+
+/* 1번 카테고리 스타일 */
 .category-1 {
-    background-color: #FF5733;
-    border-bottom: 2px solid #C70039;
-  }
-  
-  .category-2 {
-    background-color: #33FF57;
-    border-bottom: 2px solid #00B140;
-  }
-  
-  .category-3 {
-    background-color: #3357FF;
-    border-bottom: 2px solid #0033FF;
-  }
-  
-  .category-4 {
-    background-color: #F4A261;
-    border-bottom: 2px solid #D27D3B;
-  }
-  
-  .category-5 {
-    background-color: #2D9CDB;
-    border-bottom: 2px solid #1A75C2;
-  }
-  
-  .category-6 {
-    background-color: #9B59B6;
-    border-bottom: 2px solid #8E44AD;
+  background-color: var(--category-1-highlight);
+  color: var(--category-1-text-color);
+  border-bottom: 2px solid var(--category-1-solid-border);
+  border: 2.4px dotted var(--category-1-dotted-border);
+}
+
+.category-1 .heart-btn {
+  color: var(--category-1-heart);
+}
+
+.category-1 .category-container {
+  border: 2px solid var(--category-1-border);
+}
+
+/* 2번 카테고리 스타일 */
+.category-2 {
+  background-color: var(--category-2-highlight);
+  color: var(--category-2-text-color);
+  border-bottom: 2px solid var(--category-2-solid-border);
+  border: 2.4px dotted var(--category-2-dotted-border);
+}
+
+.category-2 .heart-btn {
+  color: var(--category-2-heart);
+}
+
+.category-2 .category-container {
+  border: 2px solid var(--category-2-border);
+}
+/* 3번 카테고리 스타일 */
+.category-3 {
+  background-color: var(--category-2-highlight);
+  color: var(--category-2-text-color);
+  border-bottom: 2px solid var(--category-2-solid-border);
+  border: 2.4px dotted var(--category-2-dotted-border);
+}
+
+.category-3 .heart-btn {
+  color: var(--category-2-heart);
+}
+
+.category-3 .category-container {
+  border: 2px solid var(--category-2-border);
+}
+/* 4번 카테고리 스타일 */
+.category-4 {
+  background-color: var(--category-2-highlight);
+  color: var(--category-2-text-color);
+  border-bottom: 2px solid var(--category-2-solid-border);
+  border: 2.4px dotted var(--category-2-dotted-border);
+}
+
+.category-4 .heart-btn {
+  color: var(--category-2-heart);
+}
+
+.category-4 .category-container {
+  border: 2px solid var(--category-2-border);
+}
+/* 5번 카테고리 스타일 */
+.category-5 {
+  background-color: var(--category-2-highlight);
+  color: var(--category-2-text-color);
+  border-bottom: 2px solid var(--category-2-solid-border);
+  border: 2.4px dotted var(--category-2-dotted-border);
+}
+
+.category-5 .heart-btn {
+  color: var(--category-2-heart);
+}
+
+.category-5 .category-container {
+  border: 2px solid var(--category-2-border);
+}
+/* 6번 카테고리 스타일 */
+.category-6 {
+  background-color: var(--category-2-highlight);
+  color: var(--category-2-text-color);
+  border-bottom: 2px solid var(--category-2-solid-border);
+  border: 2.4px dotted var(--category-2-dotted-border);
+}
+
+.category-6 .heart-btn {
+  color: var(--category-2-heart);
+}
+
+.category-6 .category-container {
+  border: 2px solid var(--category-2-border);
+}
+
+  .todo-container {
+    display: flex;
+    flex-direction: column; /* 기본적으로 세로로 배치 */
+    position: relative; /* 위치를 설정하기 위해 추가 */
   }
 
   .doing-container {
     background-color: #FFFBF1;
     border-radius: 28.8px;
+    position: relative;
   }
   
   .completed-container {
@@ -39,8 +159,96 @@
     border-radius: 28.8px;
   }
   
-  .edit-container {
-    background-color: #FFFBF1;
-    border-radius: 28.8px;
+
+  /* Todo.css */
+  .doing-tab-btn{
+  height: 44px;
+  width: 164px;
+  top: 0; /* 필요에 따라 버튼 위치 조정 */
+
   }
-  
+.doing-tab-btn img{
+  width: 2.125rem;
+  height: auto;
+  }
+.completed-tab-btn{
+  height: 44px;
+  width: 164px;
+  top: 0; /* 필요에 따라 버튼 위치 조정 */
+
+}
+.completed-tab-btn img{
+  width: 2.125rem;
+  height: auto;
+  margin: 0;
+}
+.edit-tab-btn {
+  width: 75.2px;
+  height: 44px;
+  position: absolute;
+  right: 0; /* 우측 끝에 배치 */
+  top: 0; /* 필요에 따라 버튼 위치 조정 */
+}
+/* 할 일 리스트 항목에 버튼을 왼쪽에 정렬 */
+li {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+
+/* 하트 버튼을 텍스트 앞에 배치 */
+.heart-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: blue;
+  margin-right: 10px; /* 텍스트와 버튼 사이에 간격 추가 */
+}
+
+.heart-btn:hover {
+  color: #ff1a1a;
+}
+/* 카테고리 컨테이너 스타일 */
+.category {
+  position: relative; /* 버튼을 절대 위치로 배치하기 위해 */
+  margin-bottom: 20px; /* 카테고리와 할일 목록 간 간격 */
+}
+
+/* 카테고리명 스타일 */
+.category h3 {
+  margin: 0; /* 카테고리명 주변의 여백 제거 */
+}
+
+
+/* 할일 추가 버튼 스타일 */
+.add-todo-btn {
+  font-family: 'cafe24Syongsyong';
+  font-size: 1rem;
+  position: absolute;
+  right: 0; /* 오른쪽 끝에 배치 */
+  top: 0; /* 위쪽 끝에 배치 */
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #DEBEAF;
+  border: none;
+  border-radius: 5px;
+  background: none;
+}
+
+/* 할일 목록 스타일 */
+.todo-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px; /* 카테고리명과 할일 목록 사이에 간격 추가 */
+}
+
+/* 할일 항목 스타일 */
+.todo-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+
