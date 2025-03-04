@@ -1,3 +1,4 @@
+/*TimeTracker.js */
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig";
 import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
@@ -142,10 +143,16 @@ const TimeTracker = ({ date }) => {
     closeModal();
   };
 
+
+
+
+  
   // 컴포넌트가 처음 렌더링될 때 시간 블록 가져오기
   useEffect(() => {
     fetchTimeBlocks();
   }, [date]); // 날짜가 변경될 때마다 새로 불러오기
+
+
 
   return (
     <div className="time-tracker">

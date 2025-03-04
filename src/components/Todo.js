@@ -1,3 +1,4 @@
+/*Todo.js */
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig"; 
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
@@ -134,25 +135,53 @@ const Todo = ({ date }) => {
 
   const deleteCategory = async (categoryId) => {
     try {
+      // 1. 해당 카테고리와 관련된 할 일 삭제
       const categoryTodos = todos.filter(todo => todo.categoryId === categoryId);
       categoryTodos.forEach(async (todo) => {
+        // 할 일 삭제
         await deleteDoc(doc(db, "todos", todo.id));
+  
+        // 해당 할 일에 연결된 시간 블록도 삭제
+        const timeBlocksRef = collection(db, "timeBlocks");
+        const q = query(timeBlocksRef, where("todo", "==", todo.id));  // 할 일 ID로 시간 블록 찾기
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);  // 시간 블록 삭제
+        });
       });
+  
+      // 2. 카테고리 삭제
       await deleteDoc(doc(db, "categories", categoryId));
+  
+      // 3. 상태 업데이트
       setCategories(categories.filter(category => category.id !== categoryId));
     } catch (error) {
       console.error("Error deleting category:", error);
     }
   };
+  
 
   const deleteTodo = async (todoId) => {
     try {
+      // 1. 할 일 삭제
       await deleteDoc(doc(db, "todos", todoId));
       setTodos(todos.filter(todo => todo.id !== todoId));
+  
+      // 2. 해당 할 일에 해당하는 시간 블록을 찾고 삭제
+      const timeBlocksRef = collection(db, "timeBlocks");
+      const q = query(timeBlocksRef, where("todo", "==", todoId));  // 할 일 ID로 시간 블록 찾기
+      const querySnapshot = await getDocs(q);
+  
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);  // 시간 블록 삭제
+      });
+  
+      console.log("할 일과 관련된 시간 블록이 삭제되었습니다.");
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
   };
+  
 
   const saveEdit = () => {
     // 모든 카테고리 수정
