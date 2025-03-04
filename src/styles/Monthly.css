@@ -198,7 +198,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.5); /* 임시 아이콘 박스 스타일 */
   border-radius: 50%;
 
   /* 부모 요소(tile) 기준으로 중앙 정렬 */
@@ -210,19 +209,15 @@
 
 .icon-placeholder {
   font-size: 3rem;
-  color: gray;
 }
 
 
-.icon-completed img{
+.icon img{
   width: 3rem;
 }
 
-.icon-missed img{
-  width: 3rem;
-}
 
-.has-todo {
+.has-todo, .no-todo {
   opacity: 1;
 }
 
@@ -231,10 +226,18 @@
 }
 
 
-/* 오늘 날짜에 border 스타일 적용 */
+/* 오늘 날짜에 기본 border 스타일 적용 */
 .react-calendar__tile.react-calendar__tile--now {
   border: 3.2px solid #FFC1DC !important;
 }
+
+/* hover 시 오늘 날짜의 border가 사라지고, hover된 날짜에만 border가 생기도록 설정 */
+.react-calendar__tile:hover {
+  border: 3.2px solid #FFC1DC !important;
+  background-color: #FFFBE1 !important;
+
+}
+
 
 
 /* 현재 달이 아닌 날짜를 불투명하게 */
@@ -242,4 +245,3 @@
   background-color: #FFF8E7;
   filter: blur(1.5px);  /* 3px 정도의 블러 효과 */
 }
-

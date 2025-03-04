@@ -28,6 +28,8 @@ const Todo = ({ date }) => {
         id: doc.id,
         ...doc.data()
       }));
+      console.log("📌 Firebase에서 가져온 To-Do 데이터 구조:", JSON.stringify(todosData, null, 2)); // 콘솔 출력
+    setTodos(todosData);
       setTodos(todosData);
     } catch (error) {
       console.error("Error fetching todos:", error);

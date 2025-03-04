@@ -1,8 +1,8 @@
-//Monthly.js
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../config/firebaseConfig"; // Firebase 인증 가져오기
+import { auth, db } from "../config/firebaseConfig";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Monthly.css";
@@ -10,7 +10,7 @@ import UserModal from "../components/UserModal";
 
 const Monthly = () => {
   const [date, setDate] = useState(new Date());
-  const [todos, setTodos] = useState({}); // 할 일 목록을 객체로 관리 (날짜별로 할 일)
+  const [todos, setTodos] = useState({}); // 날짜별 할 일 상태
   const [user, setUser] = useState(null); // 사용자 정보 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +22,59 @@ const Monthly = () => {
     });
 
     return () => unsubscribe();
+  }, []);
+
+  // ✅ Firebase에서 특정 날짜의 할 일 데이터 가져오는 함수
+  const fetchTodoStatsForDate = async (selectedDate) => {
+    const q = query(collection(db, "todos"), where("date", "==", selectedDate));
+
+    try {
+      const querySnapshot = await getDocs(q);
+      let totalTodos = 0;
+      let completedTodos = 0;
+
+      querySnapshot.forEach((doc) => {
+        totalTodos += 1;
+        if (doc.data().completed) {
+          completedTodos += 1;
+        }
+      });
+
+      return { totalTodos, completedTodos };
+    } catch (error) {
+      console.error("할 일 데이터를 가져오는 중 오류 발생:", error);
+      return { totalTodos: 0, completedTodos: 0 };
+    }
+  };
+
+  // ✅ 현재 월의 모든 날짜에 대해 할 일 상태를 가져와 콘솔 출력
+  useEffect(() => {
+    const fetchAllTodoStatus = async () => {
+      let statusMap = {};
+
+      for (let i = 1; i <= 31; i++) {
+        const dateStr = `2025-03-${i.toString().padStart(2, "0")}`; // YYYY-MM-DD 형식
+
+        const { totalTodos, completedTodos } = await fetchTodoStatsForDate(dateStr);
+
+        if (totalTodos === 0) {
+          statusMap[dateStr] = ""; // 할 일이 없는 경우
+        } else if (completedTodos === 0) {
+          statusMap[dateStr] = "fork"; // 완료된 할 일이 없는 경우
+        } else if (completedTodos > 0 && completedTodos < totalTodos) {
+          statusMap[dateStr] = "strawberry"; // 일부 완료
+        } else if (completedTodos === totalTodos) {
+          statusMap[dateStr] = "cake"; // 모든 할 일 완료
+        }
+
+        // ✅ 콘솔에 현재 날짜별 상태 출력
+        console.log(`[${dateStr}] 할 일: ${totalTodos}, 완료: ${completedTodos}, 상태: ${statusMap[dateStr]}`);
+      }
+
+      setTodos(statusMap);
+    };
+
+    fetchAllTodoStatus();
   }, []);
 
   const handleDateClick = (selectedDate) => {
@@ -36,15 +89,6 @@ const Monthly = () => {
   const nextMonth = () => {
     setDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   };
-
-  // 테스트용: 할 일 데이터를 추가
-  useEffect(() => {
-    setTodos({
-      "2025-03-01": { completed: true },
-      "2025-03-05": { completed: false },
-      "2025-03-10": { completed: true },
-    });
-  }, []);
 
   return (
     <div className="monthly-container">
@@ -83,7 +127,7 @@ const Monthly = () => {
           value={date}
           locale="en"
           showNavigation={false}
-          showFixedNumberOfWeeks={true} // 6줄 고정
+          showFixedNumberOfWeeks={true}
           calendarType="hebrew"
           next2Label={null}
           prev2Label={null}
@@ -113,23 +157,27 @@ const Monthly = () => {
             return classNames.trim();
           }}
           tileContent={({ date: tileDate, view }) => {
-            const tileDateString = tileDate.toISOString().split("T")[0]; // 날짜 문자열
+            const tileDateString = format(new Date(tileDate).setHours(0, 0, 0, 0), "yyyy-MM-dd");
             return (
               <div className="date-content">
                 <span className="date-label">{tileDate.getDate()}</span>
                 <div className={`icon-box ${todos[tileDateString] ? "has-todo" : "no-todo"}`}>
                   {todos[tileDateString] ? (
-                    todos[tileDateString].completed ? (
-                      <figure className="icon-completed">
-                        <img src="/assets/poc_icon_cake.png" alt="icon-cake" />
+                    todos[tileDateString] === "fork" ? (
+                      <figure className="icon">
+                        <img src="/assets/poc_icon_fork.png" alt="fork"/>
                       </figure>
+                    ) : todos[tileDateString] === "strawberry" ? (
+                      <figure className="icon">
+                        <img src="/assets/poc_icon_strawberry.png" alt="fork"/>
+                        </figure>
                     ) : (
-                      <figure className="icon-missed">
-                        <img src="/assets/poc_icon_fork.png" alt="icon-fork" />
-                      </figure>
+                      <figure className="icon">
+                        <img src="/assets/poc_icon_cake.png" alt="fork"/>
+                        </figure>
                     )
                   ) : (
-                    <figure className="icon-placeholder">⚪</figure>
+                    <figure className="icon-placeholder"></figure>
                   )}
                 </div>
               </div>
