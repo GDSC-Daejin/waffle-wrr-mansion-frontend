@@ -1,3 +1,4 @@
+/*Daily.css*/
 .user-header {
   position: fixed;
   top: 0;
@@ -10,9 +11,14 @@
 .daily-container {
   display: flex;
   flex-direction: column;
-  padding-top: 50px; /* 고정된 헤더의 아래 여백 */
+  padding-top: 50px; /* 고정된 헤더 아래 여백 */
+  background-image: url("/public/assets/poc_background_daily.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* 화면 전체를 꽉 채우도록 최소 높이 설정 */
+  overflow: hidden; /* 스크롤을 없애기 위해 오버플로우 숨김 */
 }
-
 .daily-content {
   display: flex;
   justify-content: space-between;
@@ -26,9 +32,6 @@
   padding-right: 20px;
 }
 
-.daily-aside .time-tracker, .daily-aside .notes {
-  margin-bottom: 20px;
-}
 
 /* 3. 중앙 (Main) */
 .daily-main {
@@ -37,9 +40,6 @@
   margin: 0 20px; /* 좌우 여백 */
 }
 
-.daily-main .todo-list {
-  margin-top: 20px;
-}
 
 /* 4. 우측 (Bside) */
 .daily-bside {
@@ -47,16 +47,19 @@
   padding-left: 20px;
 }
 
-.daily-bside .mini-monthly, .daily-bside .photo-gallery {
-  margin-bottom: 20px;
+
+
+.mini-monthly {
+  width: 371.2px;
+  height: 371.2px;
+  background-color: #FFFBF1;
+  border-radius: 28.8px;
+
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center;     /* 수직 중앙 정렬 */
 }
 
-/* MiniMonthly (기존 Monthly.js 활용) */
-.mini-monthly {
-  /* 필요한 스타일 추가 */
-  width: 100%;
-  height: auto;
-}
 
 /* PhotoGallery */
 .photo-gallery {

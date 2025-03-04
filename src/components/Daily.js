@@ -1,3 +1,4 @@
+/*Daily.js */
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { auth } from "../config/firebaseConfig";
@@ -54,7 +55,9 @@ const Daily = () => {
 
         {/* 4. 우측 Bside */}
         <aside className="daily-bside">
+          <article className="mini-monthly">
           <MiniMonthly date={date} />
+          </article>
           <PhotoGallery date={date} />
         </aside>
       </div>

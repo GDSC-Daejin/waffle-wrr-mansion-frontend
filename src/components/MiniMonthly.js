@@ -1,12 +1,13 @@
+/*MiniMonthly.js*/
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../config/firebaseConfig";
 import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Monthly.css";
+import "../styles/MiniMonthly.css"; // 기존 Monthly.css 불러오기
 
-const Monthly = () => {
+const MiniMonthly = () => {
   const [date, setDate] = useState(new Date());
   const [user, setUser] = useState(null); // 사용자 정보 상태
   const navigate = useNavigate();
@@ -20,9 +21,6 @@ const Monthly = () => {
     return () => unsubscribe();
   }, []);
 
-
-
-  
   const handleDateClick = (selectedDate) => {
     const formattedDate = format(selectedDate, "yyyy-MM-dd");
     navigate(`/daily/${formattedDate}`); // 날짜를 URL로 전달
@@ -37,19 +35,18 @@ const Monthly = () => {
   };
 
   return (
-    <div className="monthly-container">
+    <div className="mini-monthly-container"> {/* 고유한 클래스 추가 */}
       {/* 상단 헤더 */}
-      <header className="calendar-header">
-      <button className="prev-month-button" onClick={prevMonth}>〈</button>
-        <span className="En-y-m">
+      <header className="mini-calendar-header">
+        <button className="prev-month-button" onClick={prevMonth}>〈</button>
+        <span className="mini-En-y-m" >
           {date.getFullYear()} {date.toLocaleString("en-US", { month: "long" })}
         </span>
         <button className="next-month-button" onClick={nextMonth}>〉</button>
       </header>
 
       {/* 캘린더와 네비게이션 버튼을 감싼 컨테이너 */}
-      <div className="calendar-wrapper">
-
+      <div className="mini-calendar-wrapper" >
         <Calendar
           onClickDay={handleDateClick}
           value={date}
@@ -93,4 +90,4 @@ const Monthly = () => {
   );
 };
 
-export default Monthly;
+export default MiniMonthly;
