@@ -159,87 +159,254 @@
 
 }
 
-  .todo-container {
-    width: 532px;
-    display: flex;
-    flex-direction: column; /* 기본적으로 세로로 배치 */
-    position: relative; /* 위치를 설정하기 위해 추가 */
-  }
+/* 색상 세트 정의 */
+:root {
+  /* 1번 카테고리 색상 세트 */
+  --category-1-bg: #FAFAFA;
+  --category-1-highlight: #FDF3E3;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-1-text-color: #DEBEAF;  /* 글자색 */
+  --category-1-dotted-border: #FCF6EC;  /* 점선 */
+  --category-1-solid-border: #FDF3E3;  /* 실선 */
+  --category-1-heart: #FDF3E3;  /* 하트 이모지 배경색 */
+  --category-1-border: #FFEBCC;  /* 테두리 */
 
-  .doing-container {
-    background-color: #FFFBF1;
-    border-radius: 28.8px;
-    position: relative;
-  }
-  
-  .completed-container {
-    background-color: #FFFBF1;
-    border-radius: 28.8px;
-  }
-  
+  /* 2번 카테고리 색상 세트 */
+  --category-2-bg: #FAFAFA;
+  --category-2-highlight: #FDDBE7;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-2-text-color: #DEAFC8;  /* 글자색 */
+  --category-2-dotted-border: #FCE7EF;  /* 점선 */
+  --category-2-solid-border: #FDDBE7;  /* 실선 */
+  --category-2-heart: #FDDBE7;  /* 하트 이모지 배경색 */
+  --category-2-border: #FFBCD4;  /* 테두리 */
 
-  /* Todo.css */
-  .doing-tab-btn{
-  height: 44px;
-  width: 164px;
-  top: 0; /* 필요에 따라 버튼 위치 조정 */
+  /* 3번 카테고리 색상 세트 */
+  --category-3-bg: #FAFAFA;
+  --category-3-highlight: #FDE5E9;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-3-text-color: #DEAFBA;  /* 글자색 */
+  --category-3-dotted-border: #FCEEF0;  /* 점선 */
+  --category-3-solid-border: #FDE5E9;  /* 실선 */
+  --category-3-heart: #FDE5E9;  /* 하트 이모지 배경색 */
+  --category-3-border: #FFD1D8;  /* 테두리 */
 
-  }
-.doing-tab-btn img{
-  width: 2.125rem;
-  height: auto;
-  }
-.completed-tab-btn{
-  height: 44px;
-  width: 164px;
-  top: 0; /* 필요에 따라 버튼 위치 조정 */
+  /* 4번 카테고리 색상 세트 */
+  --category-4-bg: #FAFAFA;
+  --category-4-highlight: #E7F3E3;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-4-text-color: #C5DEAF;  /* 글자색 */
+  --category-4-dotted-border: #EFF6EC;  /* 점선 */
+  --category-4-solid-border: #E7F3E3;  /* 실선 */
+  --category-4-heart: #E7F3E3;  /* 하트 이모지 배경색 */
+  --category-4-border: #D5EDCC;  /* 테두리 */
+
+  /* 5번 카테고리 색상 세트 */
+  --category-5-bg: #FAFAFA;
+  --category-5-highlight: #D7EFED;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-5-text-color: #AFDBDE;  /* 글자색 */
+  --category-5-dotted-border: #E5F4F2;  /* 점선 */
+  --category-5-solid-border: #D7EFED;  /* 실선 */
+  --category-5-heart: #D7EFED;  /* 하트 이모지 배경색 */
+  --category-5-border: #B4E5E0;  /* 테두리 */
+
+  /* 6번 카테고리 색상 세트 */
+  --category-6-bg: #FAFAFA;
+  --category-6-highlight: #EEEBF8;  /* 형광펜 효과(글자 위에 옅게) */
+  --category-6-text-color: #CAAFDE;  /* 글자색 */
+  --category-6-dotted-border: #F3F1F9;  /* 점선 */
+  --category-6-solid-border: #EEEBF8;  /* 실선 */
+  --category-6-heart: #EEEBF8;  /* 하트 이모지 배경색 */
+  --category-6-border: #E2DFFF;  /* 테두리 */
+}
+
+
+/* 1번 카테고리 스타일 */
+.category-1 {
+  background-color: var(--category-1-highlight);
+  color: var(--category-1-text-color);
+  border-bottom: 2px solid var(--category-1-solid-border);
+  border: 2.4px dotted var(--category-1-dotted-border);
+}
+
+.category-1 .heart-btn {
+  color: var(--category-1-heart);
+}
+
+.category-1 .category-container {
+  border: 2px solid var(--category-1-border);
+  background-color: var(--category-1-bg);
+}
+
+/* 2번 카테고리 스타일 */
+.category-2 {
+  background-color: var(--category-2-highlight);
+  color: var(--category-2-text-color);
+  border-bottom: 2px solid var(--category-2-solid-border);
+  border: 2.4px dotted var(--category-2-dotted-border);
+}
+
+.category-2 .heart-btn {
+  color: var(--category-2-heart);
+}
+
+.category-2 .category-container {
+  border: 2px solid var(--category-2-border);
+  background-color: var(--category-2-bg);
 
 }
-.completed-tab-btn img{
-  width: 2.125rem;
-  height: auto;
-  margin: 0;
+/* 3번 카테고리 스타일 */
+.category-3 {
+  background-color: var(--category-3-highlight);
+  color: var(--category-3-text-color);
+  border-bottom: 2px solid var(--category-3-solid-border);
+  border: 2.4px dotted var(--category-3-dotted-border);
 }
-.edit-tab-btn {
-  width: 75.2px;
-  height: 44px;
-  position: absolute;
-  right: 0; /* 우측 끝에 배치 */
-  top: 0; /* 필요에 따라 버튼 위치 조정 */
+
+.category-3 .heart-btn {
+  color: var(--category-3-heart);
 }
-/* 할 일 리스트 항목에 버튼을 왼쪽에 정렬 */
-li {
+
+.category-3 .category-container {
+  border: 2px solid var(--category-3-border);
+  background-color: var(--category-3-bg);
+
+}
+/* 4번 카테고리 스타일 */
+.category-4 {
+  background-color: var(--category-4-highlight);
+  color: var(--category-4-text-color);
+  border-bottom: 2px solid var(--category-4-solid-border);
+  border: 2.4px dotted var(--category-4-dotted-border);
+}
+
+.category-4 .heart-btn {
+  color: var(--category-4-heart);
+}
+
+.category-4 .category-container {
+  border: 2px solid var(--category-4-border);
+  background-color: var(--category-4-bg);
+
+}
+/* 5번 카테고리 스타일 */
+.category-5 {
+  background-color: var(--category-5-highlight);
+  color: var(--category-5-text-color);
+  border-bottom: 2px solid var(--category-5-solid-border);
+  border: 2.4px dotted var(--category-5-dotted-border);
+}
+
+.category-5 .heart-btn {
+  color: var(--category-5-heart);
+}
+
+.category-5 .category-container {
+  border: 2px solid var(--category-5-border);
+  background-color: var(--category-5-bg);
+
+}
+/* 6번 카테고리 스타일 */
+.category-6 {
+  background-color: var(--category-6-highlight);
+  color: var(--category-6-text-color);
+  border-bottom: 2px solid var(--category-6-solid-border);
+  border: 2.4px dotted var(--category-6-dotted-border);
+}
+
+.category-6 .heart-btn {
+  color: var(--category-6-heart);
+}
+
+.category-6 .category-container {
+  border: 2px solid var(--category-6-border);
+  background-color: var(--category-6-bg);
+
+}
+
+/* Todo 전체 컨테이너 */
+.todo-container {
+  width: 532px;
+  height: 740px;
   display: flex;
-  align-items: center;
-  padding: 5px 10px;
-  margin: 5px 0;
+  flex-direction: column;
+  align-items: center; /* 내부 요소 중앙 정렬 */
+
 }
 
-/* 하트 버튼을 텍스트 앞에 배치 */
-.heart-btn {
-  background: none;
+/* 진행 중(To-Do) 컨테이너 중앙 정렬 */
+.in-doing-container,
+.completed-container,
+.edit-container {
+  background-color: #FFF8E7;
+  border-end-start-radius: 28.8px;
+  border-end-end-radius: 28.8px;
+  max-height: 740px;
+  width: 508px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 내부 요소 중앙 정렬 */
+  justify-content: center; /* 내부 요소 수직 중앙 정렬 */
+
+}
+
+.tab-btns {
+  width:  508px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6칸으로 나눔 */
+  align-items: center;
+  margin-bottom: 0; /* todo-container와 붙도록 설정 */
+}
+/* 공통 버튼 스타일 */
+.doing-tab-btn,
+.completed-tab-btn {
+  height: 44px;
+  width: 170px;
   border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: blue;
-  margin-right: 10px; /* 텍스트와 버튼 사이에 간격 추가 */
+  border-top-left-radius: 28.8px;
+  border-top-right-radius: 28.8px;
 }
 
-.heart-btn:hover {
-  color: #ff1a1a;
+.doing-tab-btn img,
+.completed-tab-btn img{
+  width: 2.215rem;
+  height: auto;
+  border: none;
+  
 }
-/* 카테고리 컨테이너 스타일 */
-.category-container{
-border-radius: 24px;
-width: 508px;
+.doing-tab-btn {
+  grid-column: span 2; /* 1~2칸 차지 */
+  background-color: #FFF8E7;
+
 }
-.category {
-  margin-bottom: 20px; /* 카테고리와 할일 목록 간 간격 */
+.completed-tab-btn {
+  grid-column: span 2; /* 3~4칸 차지 */
+  background-color: #FFEEC6;
 }
-.category-line{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.none-btn{
+  background-color: transparent;
+  border: none;
+}
+.edit-tab-btn{
+  height: 44px;
+  width: 82px;
+  grid-column: span 1; /* 6번째 칸 차지 */
+  justify-self: end; /* 오른쪽 정렬 */
+  border: none;
+  border-top-left-radius: 28.8px;
+  border-top-right-radius: 28.8px;
+  background-color: #FFEEC6;
+}
+/* 카테고리 추가 버튼 중앙 정렬 */
+.add-category-btn{
+  width: 76px;
+  border: none;
+  border-end-start-radius: 50%;
+  border-end-end-radius: 50%;
+  display: block; /* 중앙 정렬을 위해 block 요소로 변경 */
+  margin: 0px auto; /* 상하는 10px, 좌우는 auto로 중앙 정렬 */
+  font-family: "cafe24syongsyong";
+  font-size: 2rem;
+  color: #DEBEAF;
+  background-color: #FFF8E7;
+  display: block; /* 중앙 정렬을 위해 block 요소로 변경 */
+  margin: 0px auto; /* 상하는 10px, 좌우는 auto로 중앙 정렬 */
 }
 /* 할일 추가 버튼 스타일 */
 .add-todo-btn {
@@ -250,20 +417,66 @@ width: 508px;
   color: #DEBEAF;
 }
 
-
-
-/* 할일 목록 스타일 */
+/* 할 일 목록 스타일 */
 .todo-list {
-  list-style: none;
   padding-left: 0;
-  margin-top: 10px; /* 카테고리명과 할일 목록 사이에 간격 추가 */
+  margin-top: 10px;
+  color: #3F2D20;
 }
-
 /* 할일 항목 스타일 */
 .todo-list li {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  background-color: #FAFAFA;
 }
+
+
+/* 하트 버튼 스타일 */
+.heart-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: blue;
+  margin-right: 10px;
+}
+
+/* 카테고리 컨테이너 스타일 */
+.category-container{
+border-radius: 24px;
+width: 480px;
+margin: 5px;
+}
+.category {
+  margin-bottom: px; /* 카테고리와 할일 목록 간 간격 */
+}
+.category-line{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.category_icon {
+  width: 32.38px;
+  height: auto;
+}
+.category-name{
+  font-size: 1rem;
+  letter-spacing: -0.8px;
+  color: #3F2D20;
+}
+
+
+input {
+  font-family: "SUIT Variable";
+  font-size: 12.8pt;
+  border: none;
+  outline: none;
+  background: #FAFAFA;
+}
+
+
+
+
 
 

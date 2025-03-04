@@ -269,10 +269,12 @@ const Todo = ({ date }) => {
   return (
     <div className="todo-container">
       <div>
+        <header className="tab-btns">
         <button onClick={() => setCurrentTab("doing")}className="doing-tab-btn">
           <img src="/assets/poc_icon_strawberry.png"/></button>
         <button onClick={() => setCurrentTab("completed")} className="completed-tab-btn">
         <img src="/assets/poc_icon_cake.png"/></button>
+        <button className="none-btn"></button>
         <button onClick={() => {
           setCurrentTab("edit");
 
@@ -289,19 +291,31 @@ const Todo = ({ date }) => {
           setTodos(updatedTodos);  // 상태 업데이트
           setCategories(updatedCategories);  // 카테고리도 수정 가능 상태로 설정
         }}className="edit-tab-btn">✏️</button>
+        </header>
       </div>
 
       {currentTab === "doing" && (
         <article className="doing-container">
-          
-
+          <div className="in-doing-container">
           {categories.map((category, index) => (
   <div key={category.id} 
     className="category-container" 
-    style={{ backgroundColor: `var(--category-${index + 1}-bg)` }}
-  >
-    <div className="category-line">
-      <h3>{category.name}</h3>
+    style={{ 
+      backgroundColor: `var(--category-${index + 1}-bg)`, 
+      border: `2px solid var(--category-${index + 1}-border)`
+    }}
+    >
+    <div className="category-line"
+    style={{
+      width: '450px',
+      height: '60px',
+      margin: '0 auto',
+      borderBottom:`2px solid var(--category-${index + 1}-border)`
+    }}>
+      <h3>
+        <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+        <span className="category-name">{category.name}</span>
+        </h3>
       {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
       <button onClick={() => setShowTodoInput(category.id)}
       className="add-todo-btn"
@@ -339,8 +353,6 @@ const Todo = ({ date }) => {
     </ul>
   </div>
 ))}
-
-          <button onClick={() => setShowCategoryInput(true)}>+ 카테고리 추가</button>
           {showCategoryInput && (
             <div>
               <input
@@ -352,14 +364,22 @@ const Todo = ({ date }) => {
               />
             </div>
           )}
+            </div>
+            <button onClick={() => setShowCategoryInput(true)} 
+            className="add-category-btn"
+            >+</button>
         </article>
       )}
+
 
 {currentTab === "completed" && (
   <article className="completed-container">
     {categories.map((category, index) => (
       <div key={category.id} className={`category category-${index + 1}`} >              
-      <h3>{category.name}</h3>
+      <h3>
+      <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+        {category.name}
+        </h3>
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
@@ -390,6 +410,7 @@ const Todo = ({ date }) => {
       <div key={category.id} className={`category category-${index + 1}`}> 
         {category.isEditing ? (
           <>
+            <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>          
             <input
               type="text"
               value={category.name}
@@ -397,7 +418,10 @@ const Todo = ({ date }) => {
             />
           </>
         ) : (
-          <h3>{category.name}</h3>
+          <h3>
+            <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+            {category.name}
+          </h3>
         )}
         <button onClick={() => deleteCategory(category.id)}>삭제</button>
 
