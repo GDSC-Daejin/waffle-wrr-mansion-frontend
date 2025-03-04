@@ -113,8 +113,8 @@
  .react-calendar__month-view__weekdays__weekday {
   text-align: center;
   padding: 5px;
-  border-top-left-radius: 20%;
-  border-top-right-radius: 20%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   background-color: #FF6B81;
   display: flex;
   align-items: center; /* 수직 중앙 정렬 */

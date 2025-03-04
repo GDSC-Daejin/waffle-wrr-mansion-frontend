@@ -271,7 +271,8 @@ const Todo = ({ date }) => {
 
           {categories.map((category) => (
             <div key={category.id} className="category" 
-            style={{ backgroundColor: category.color }}>              <h3>{category.name}</h3>
+            style={{ backgroundColor: category.color }}>              
+            <h3>{category.name}</h3>
               <div>
                 <input
                   type="text"
@@ -302,13 +303,14 @@ const Todo = ({ date }) => {
 {currentTab === "completed" && (
   <article className="completed-container">
     {categories.map((category) => (
-      <div key={category.id} className="category">
-        <h3>{category.name}</h3>
+      <div key={category.id} className="category" 
+      style={{ backgroundColor: category.color }}>              
+      <h3>{category.name}</h3>
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
             .map((todo) => (
-              <li key={todo.id}>
+              <li key={todo.id} style={{ backgroundColor: category.color }}>
                 <span>{todo.text}</span>
                 <button onClick={() => toggleUnComplete(todo.id)}>💔</button> {/* 완료 취소 버튼 */}
               </li>
@@ -326,7 +328,8 @@ const Todo = ({ date }) => {
     <button onClick={saveEdit}>저장</button>
 
     {categories.map((category) => (
-      <div key={category.id} className="category">
+      <div key={category.id} className="category" 
+      style={{ backgroundColor: category.color }}> 
         {category.isEditing ? (
           <>
             <input
@@ -345,7 +348,7 @@ const Todo = ({ date }) => {
           {todos
             .filter(todo => todo.categoryId === category.id)
             .map((todo) => (
-              <li key={todo.id}>
+              <li key={todo.id} style={{ backgroundColor: category.color }}>
                 {todo.isEditing ? (
                   <>
                     <input

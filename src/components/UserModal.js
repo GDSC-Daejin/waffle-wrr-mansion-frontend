@@ -1,3 +1,4 @@
+/*UserModal.js */
 import React, { useState } from "react";
 import MypageModal from "./MypageModal";
 import DeleteAccountModal from "./DeleteAccountModal";
