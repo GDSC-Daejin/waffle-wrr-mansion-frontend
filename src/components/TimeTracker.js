@@ -1,6 +1,7 @@
+/*TimeTracker.js */
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
 import "../styles/TimeTracker.css";
 
 const TimeTracker = ({ date }) => {
@@ -50,6 +51,21 @@ const TimeTracker = ({ date }) => {
     }
   };
 
+  // Firebase에서 시간 블록 가져오기
+  const fetchTimeBlocks = async () => {
+    const q = query(collection(db, "timeBlocks"), where("date", "==", date));
+    try {
+      const querySnapshot = await getDocs(q);
+      const timeBlocksData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setTimeBlocks(timeBlocksData);
+    } catch (error) {
+      console.error("Error fetching time blocks:", error);
+    }
+  };
+
   // 시간 클릭 시 모달 열기
   const openModal = (hour) => {
     const displayHour = hour > 24 ? hour - 24 : hour; // 익일 1AM부터 1, 2로 표시
@@ -73,7 +89,27 @@ const TimeTracker = ({ date }) => {
     setSelectedHour(null);
   };
 
-  // 시작 시간과 종료 시간이 올바르게 선택됐는지 확인
+  // 시간 블록을 Firebase에 저장하기
+  const saveTimeBlocksToFirebase = async (newBlocks) => {
+    try {
+      const timeBlocksRef = collection(db, "timeBlocks");
+      for (let block of newBlocks) {
+        const blockRef = doc(timeBlocksRef);
+        await setDoc(blockRef, {
+          hour: block.hour,
+          minute: block.minute,
+          todo: block.todo,
+          color: block.color,
+          date: date // 날짜도 저장하여 해당 날짜에만 표시
+        });
+      }
+      console.log("시간 블록이 저장되었습니다.");
+    } catch (error) {
+      console.error("시간 블록 저장 오류:", error);
+    }
+  };
+
+  // 시작 시간과 종료 시간이 올바르게 선택됐는지 확인하고 저장
   const handleSave = () => {
     if (
       !startHour || !startMinute ||
@@ -97,12 +133,26 @@ const TimeTracker = ({ date }) => {
       newBlocks.push({ hour, minute, todo: selectedTodo, color: color });
     }
 
+    // Firebase에 시간 블록 저장
+    saveTimeBlocksToFirebase(newBlocks);
+
     // 시간 블록 추가
     setTimeBlocks(prevState => [...prevState, ...newBlocks]);
 
     alert(`시간이 저장되었습니다: ${startHour}:${startMinute} ~ ${endHour}:${endMinute}`);
     closeModal();
   };
+
+
+
+
+  
+  // 컴포넌트가 처음 렌더링될 때 시간 블록 가져오기
+  useEffect(() => {
+    fetchTimeBlocks();
+  }, [date]); // 날짜가 변경될 때마다 새로 불러오기
+
+
 
   return (
     <div className="time-tracker">
@@ -111,15 +161,23 @@ const TimeTracker = ({ date }) => {
         return (
           <div key={hour} className="hour-block" onClick={() => openModal(hour)}>
             <span>{displayHour}</span>
+            
+            {/* 30분 단위로 나누는 선 (가로로) */}
             <div className="half-hour-line"></div>
             
             {/* 시간 블록에 할 일 표시 */}
             {timeBlocks.map((block, index) => {
               if (block.hour === displayHour) {
                 return (
-                  <div key={index} className="todo-block" style={{ backgroundColor: block.color }}>
-                    <span>{block.todo}</span>
-                  </div>
+                  <div
+                    key={index}
+                    className="todo-block"
+                    style={{
+                      backgroundColor: block.color,
+                      left: block.minute === 0 ? 0 : '50%', // 30분 단위로 왼쪽(0분)과 오른쪽(30분) 배치
+                      zIndex: index + 1, // 겹치는 할 일이 있을 경우 순차적으로 배치
+                    }}
+                  />
                 );
               }
             })}
@@ -129,8 +187,8 @@ const TimeTracker = ({ date }) => {
 
       {/* 모달 */}
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="timemodal-overlay">
+          <div className="timemodal">
             <h2>{selectedHour}:00 할 일 선택</h2>
 
             {/* 카테고리 선택 (드롭다운) */}
@@ -138,8 +196,15 @@ const TimeTracker = ({ date }) => {
             <select
               value={selectedCategory}
               onChange={(e) => {
-                setSelectedCategory(e.target.value);
-                setSelectedTodo(""); // 카테고리 바꾸면 To-Do 선택 초기화
+                const selectedCatId = e.target.value;
+                setSelectedCategory(selectedCatId);
+                setSelectedTodo(""); // 카테고리 변경 시 To-Do 초기화
+
+                // 🔥 선택한 카테고리의 색상을 가져와서 저장
+                const selectedCat = categories.find(cat => cat.id === selectedCatId);
+                if (selectedCat) {
+                  setColor(selectedCat.color || "#ccc"); // 색상이 없으면 기본 회색
+                }
               }}
             >
               <option value="">카테고리 선택</option>

@@ -30,7 +30,7 @@ const MypageModal = ({ user, onClose, onDeleteClick }) => {
         <section className="modal-content">
           <aside className="aside">
             <img
-              src={user?.photoURL || "/assets/default-profile.png"}
+              src={ "/assets/poc_profile.png"}
               alt="Profile"
               className="profile-img"
             />

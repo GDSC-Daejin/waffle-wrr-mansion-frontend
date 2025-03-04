@@ -1,6 +1,8 @@
+/*Todo.js */
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig"; 
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
+import "../styles/Todo.css";
 
 const colorPalette = [
   ["#FFEBCC"], // category-1 색상 세트
@@ -27,6 +29,8 @@ const Todo = ({ date }) => {
         id: doc.id,
         ...doc.data()
       }));
+      console.log("📌 Firebase에서 가져온 To-Do 데이터 구조:", JSON.stringify(todosData, null, 2)); // 콘솔 출력
+    setTodos(todosData);
       setTodos(todosData);
     } catch (error) {
       console.error("Error fetching todos:", error);
@@ -93,6 +97,7 @@ const Todo = ({ date }) => {
         { id: docRef.id, categoryId, text: newTodo, completed: false, date },
       ]);
       setNewTodo("");
+      setShowCategoryInput(false);
     } catch (error) {
       console.error("Error adding todo:", error);
     }
@@ -134,25 +139,53 @@ const Todo = ({ date }) => {
 
   const deleteCategory = async (categoryId) => {
     try {
+      // 1. 해당 카테고리와 관련된 할 일 삭제
       const categoryTodos = todos.filter(todo => todo.categoryId === categoryId);
       categoryTodos.forEach(async (todo) => {
+        // 할 일 삭제
         await deleteDoc(doc(db, "todos", todo.id));
+  
+        // 해당 할 일에 연결된 시간 블록도 삭제
+        const timeBlocksRef = collection(db, "timeBlocks");
+        const q = query(timeBlocksRef, where("todo", "==", todo.id));  // 할 일 ID로 시간 블록 찾기
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);  // 시간 블록 삭제
+        });
       });
+  
+      // 2. 카테고리 삭제
       await deleteDoc(doc(db, "categories", categoryId));
+  
+      // 3. 상태 업데이트
       setCategories(categories.filter(category => category.id !== categoryId));
     } catch (error) {
       console.error("Error deleting category:", error);
     }
   };
+  
 
   const deleteTodo = async (todoId) => {
     try {
+      // 1. 할 일 삭제
       await deleteDoc(doc(db, "todos", todoId));
       setTodos(todos.filter(todo => todo.id !== todoId));
+  
+      // 2. 해당 할 일에 해당하는 시간 블록을 찾고 삭제
+      const timeBlocksRef = collection(db, "timeBlocks");
+      const q = query(timeBlocksRef, where("todo", "==", todoId));  // 할 일 ID로 시간 블록 찾기
+      const querySnapshot = await getDocs(q);
+  
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);  // 시간 블록 삭제
+      });
+  
+      console.log("할 일과 관련된 시간 블록이 삭제되었습니다.");
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
   };
+  
 
   const saveEdit = () => {
     // 모든 카테고리 수정
@@ -269,9 +302,10 @@ const Todo = ({ date }) => {
             </div>
           )}
 
-          {categories.map((category) => (
-            <div key={category.id} className="category" 
-            style={{ backgroundColor: category.color }}>              <h3>{category.name}</h3>
+          {categories.map((category, index) => (
+            <div key={category.id} className={`category category-${index + 1}`} 
+            style={{ backgroundColor: category.color }}>              
+            <h3>{category.name}</h3>
               <div>
                 <input
                   type="text"
@@ -284,7 +318,7 @@ const Todo = ({ date }) => {
 
               <ul>
                 {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
-                  <li key={todo.id} style={{ backgroundColor: category.color }}>
+                  <li key={todo.id} className={`category-${index + 1}`} style={{ backgroundColor: category.color }}>
                     <input
                       type="text"
                       value={todo.text}
@@ -301,14 +335,15 @@ const Todo = ({ date }) => {
 
 {currentTab === "completed" && (
   <article className="completed-container">
-    {categories.map((category) => (
-      <div key={category.id} className="category">
-        <h3>{category.name}</h3>
+    {categories.map((category, index) => (
+      <div key={category.id} className={`category category-${index + 1}`} 
+      style={{ backgroundColor: category.color }}>              
+      <h3>{category.name}</h3>
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
             .map((todo) => (
-              <li key={todo.id}>
+              <li key={todo.id} className={`category category-${index + 1}`}style={{ backgroundColor: category.color }}>
                 <span>{todo.text}</span>
                 <button onClick={() => toggleUnComplete(todo.id)}>💔</button> {/* 완료 취소 버튼 */}
               </li>
@@ -325,8 +360,9 @@ const Todo = ({ date }) => {
     {/* 상단에 한 개의 저장 버튼만 위치 */}
     <button onClick={saveEdit}>저장</button>
 
-    {categories.map((category) => (
-      <div key={category.id} className="category">
+    {categories.map((category, index) => (
+      <div key={category.id} className={`category category-${index + 1}`}
+      style={{ backgroundColor: category.color }}> 
         {category.isEditing ? (
           <>
             <input
@@ -345,7 +381,7 @@ const Todo = ({ date }) => {
           {todos
             .filter(todo => todo.categoryId === category.id)
             .map((todo) => (
-              <li key={todo.id}>
+              <li key={todo.id} className={`category category-${index + 1}`}style={{ backgroundColor: category.color }}>
                 {todo.isEditing ? (
                   <>
                     <input

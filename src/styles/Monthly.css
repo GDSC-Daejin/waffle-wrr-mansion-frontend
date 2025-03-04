@@ -105,22 +105,23 @@
  .react-calendar__month-view__weekdays{
   font-family: 'SUIT Variable', sans-serif;
   font-weight: 600;
-  font-size: 2.78vh; /* 반응형 폰트 크기 */
+  font-size: 2.5vh ; /* 반응형 폰트 크기 */
   color: #FAFAFA;
-  height: 8.6vh;
+  height: 7.1vh;
   width: 100%;
  }
  .react-calendar__month-view__weekdays__weekday {
   text-align: center;
   padding: 5px;
-  border-top-left-radius: 20%;
-  border-top-right-radius: 20%;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
   background-color: #FF6B81;
   display: flex;
   align-items: center; /* 수직 중앙 정렬 */
   justify-content: center; /* 수평 중앙 정렬 */
   
 }
+
 
 .react-calendar__month-view__weekdays__weekday abbr{
   text-decoration: none;
@@ -132,8 +133,8 @@
   padding: 10px;
   cursor: pointer;
   background-color: #FFFBE1;
-  height: 12vh;
-  width: auto;
+  max-height: 12vh;
+  max-width: auto;
   position: relative; /* 날짜와 아이콘을 배치하기 위해 필요 */
   border: 1.6px dashed #FFE7EE !important; /* 점선 외곽선 추가 */
 
@@ -147,6 +148,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 12vh;
 }
 
 .date-label {
@@ -196,9 +198,9 @@
   width: 2.5rem;
   height: 2.5rem;
   display: flex;
+  margin-top: 20px;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.5); /* 임시 아이콘 박스 스타일 */
   border-radius: 50%;
 
   /* 부모 요소(tile) 기준으로 중앙 정렬 */
@@ -210,19 +212,15 @@
 
 .icon-placeholder {
   font-size: 3rem;
-  color: gray;
 }
 
 
-.icon-completed img{
-  width: 3rem;
+.icon img{
+  width: 3.5rem;
 }
 
-.icon-missed img{
-  width: 3rem;
-}
 
-.has-todo {
+.has-todo, .no-todo {
   opacity: 1;
 }
 
@@ -231,10 +229,18 @@
 }
 
 
-/* 오늘 날짜에 border 스타일 적용 */
+/* 오늘 날짜에 기본 border 스타일 적용 */
 .react-calendar__tile.react-calendar__tile--now {
   border: 3.2px solid #FFC1DC !important;
 }
+
+/* hover 시 오늘 날짜의 border가 사라지고, hover된 날짜에만 border가 생기도록 설정 */
+.react-calendar__tile:hover {
+  border: 3.2px solid #FFC1DC !important;
+  background-color: #FFFBE1 !important;
+
+}
+
 
 
 /* 현재 달이 아닌 날짜를 불투명하게 */
@@ -242,4 +248,3 @@
   background-color: #FFF8E7;
   filter: blur(1.5px);  /* 3px 정도의 블러 효과 */
 }
-

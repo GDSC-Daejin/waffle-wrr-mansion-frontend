@@ -1,3 +1,4 @@
+/*Daily.js */
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { auth } from "../config/firebaseConfig";
@@ -43,8 +44,12 @@ const Daily = () => {
       <div className="daily-content">
         {/* 2. 좌측 Aside */}
         <aside className="daily-aside">
+        <article className="time-tracker">
           <TimeTracker date={date} />
+          </article>
+        <article className="memo-pad">
           <MemoPad date={date} />
+        </article>
         </aside>
 
         {/* 3. 중앙 Main */}
@@ -54,8 +59,12 @@ const Daily = () => {
 
         {/* 4. 우측 Bside */}
         <aside className="daily-bside">
+          <article className="mini-monthly">
           <MiniMonthly date={date} />
+          </article>
+          <article className="photo-gallery">
           <PhotoGallery date={date} />
+          </article>
         </aside>
       </div>
     </div>

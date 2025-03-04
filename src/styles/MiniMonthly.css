@@ -1,0 +1,42 @@
+.mini-En-y-m{
+font-size: 2rem;
+  font-family: 'SUIT Variable', sans-serif;
+  font-weight: 700;
+  color: #FAFAFA;
+  text-shadow: 
+  0.05rem 0 0 #8a402a, 
+  -0.05rem 0 0 #8a402a, 
+  0 0.05rem 0 #8a402a, 
+  0 -0.05rem 0 #8a402a;
+}
+.mini-monthly-container{
+    height: 350px;
+    width: 350px;
+}
+.mini-date-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;  /* 수직 중앙 정렬 */
+    height: 0;  /* 부모의 높이를 기준으로 중앙 정렬 */
+    
+}
+
+.mini-date-label {
+    font-size: 1.2rem;  /* 크기 조정 */
+    border-radius: 100%;
+    width: 1.75rem;
+    height: 1.75rem;  /* 높이를 지정하여 동그라미 모양을 유지 */
+    line-height: 1.75rem;  /* 세로 중앙 정렬 */
+    text-align: center;  /* 가로 중앙 정렬 */
+    display: flex;
+    justify-content: center;  /* 수평 중앙 정렬 */
+    align-items: center;  /* 수직 중앙 정렬 */
+   margin-top: -1rem;
+}
+.custom-weekday {
+    font-size: 10px; /* 원하는 크기로 조정 */
+    font-weight: bold;
+    color: #FAFAFA;
+  }
+  
