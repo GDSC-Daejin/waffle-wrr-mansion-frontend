@@ -296,45 +296,50 @@ const Todo = ({ date }) => {
           
 
           {categories.map((category, index) => (
-            <div key={category.id} className={`category category-${index + 1}`} >              
-            <h3>{category.name}</h3>
-             {/* 할일 추가 버튼 */}
-             <button onClick={() => setShowTodoInput(category.id)}
-              className="add-todo-btn"
-              >+</button>
-              
-
-              <ul>
-  {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
-    <li key={todo.id} className={`category-${index + 1}`}>
-      <button onClick={() => toggleComplete(todo.id)} 
-      className="heart-btn"
-      style={{
-        color: `var(--category-${index + 1}-heart)`, // 실선, 하트 이모지 배경색을 사용
-      }}
-      ><FaHeart /></button> {/* 하트 버튼을 텍스트 앞에 배치 */}
+  <div key={category.id} 
+    className="category-container" 
+    style={{ backgroundColor: `var(--category-${index + 1}-bg)` }}
+  >
+    <div className="category-line">
+      <h3>{category.name}</h3>
+      {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
+      <button onClick={() => setShowTodoInput(category.id)}
+      className="add-todo-btn"
+      >+</button>
+    </div>
+    <ul>
+      {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
+        <li key={todo.id} 
+          style={{ borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)` }}
+        >
+          <button onClick={() => toggleComplete(todo.id)} 
+            className="heart-btn"
+            style={{ color: `var(--category-${index + 1}-heart)` }}
+          >
+            <FaHeart />
+          </button>
+          <input
+            type="text"
+            value={todo.text}
+            onChange={(e) => handleTodoChange(e, todo.id)}
+          />
+        </li>
+      ))}
+      {/* 특정 카테고리 선택 시 할 일 입력창 표시 */}
+    {showTodoInput === category.id && (
       <input
         type="text"
-        value={todo.text}
-        onChange={(e) => handleTodoChange(e, todo.id)}
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+        onKeyDown={(e) => handleKeyDownTodo(e, category.id)}
+        placeholder="할 일 입력"
+        autoFocus // 자동 포커스
       />
-    </li>
-  ))}
-</ul>
-{showTodoInput === category.id && (
-                  <input
-                    type="text"
-                    value={newTodo}
-                    onChange={(e) => setNewTodo(e.target.value)}
-                    onKeyDown={(e) => handleKeyDownTodo(e, category.id)}
-                    placeholder="할 일 입력"
-                  />
-                
-              )}
+    )}
+    </ul>
+  </div>
+))}
 
-
-            </div>
-          ))}
           <button onClick={() => setShowCategoryInput(true)}>+ 카테고리 추가</button>
           {showCategoryInput && (
             <div>
