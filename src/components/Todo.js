@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig"; 
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
 import "../styles/Todo.css";
+import { FaHeart } from "react-icons/fa";
 
 const colorPalette = [
   ["#FFEBCC"], // category-1 색상 세트
@@ -20,6 +21,7 @@ const Todo = ({ date }) => {
   const [newCategory, setNewCategory] = useState("");
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [currentTab, setCurrentTab] = useState("doing");
+  const [showTodoInput, setShowTodoInput] = useState(null);
 
   const fetchTodos = async () => {
     const q = query(collection(db, "todos"), where("date", "==", date));
@@ -30,7 +32,6 @@ const Todo = ({ date }) => {
         ...doc.data()
       }));
       console.log("📌 Firebase에서 가져온 To-Do 데이터 구조:", JSON.stringify(todosData, null, 2)); // 콘솔 출력
-    setTodos(todosData);
       setTodos(todosData);
     } catch (error) {
       console.error("Error fetching todos:", error);
@@ -97,6 +98,7 @@ const Todo = ({ date }) => {
         { id: docRef.id, categoryId, text: newTodo, completed: false, date },
       ]);
       setNewTodo("");
+      setShowTodoInput(null); // 입력 후 입력창 숨기기
       setShowCategoryInput(false);
     } catch (error) {
       console.error("Error adding todo:", error);
@@ -267,8 +269,12 @@ const Todo = ({ date }) => {
   return (
     <div className="todo-container">
       <div>
-        <button onClick={() => setCurrentTab("doing")}>해야 할 일</button>
-        <button onClick={() => setCurrentTab("completed")}>완료</button>
+        <header className="tab-btns">
+        <button onClick={() => setCurrentTab("doing")}className="doing-tab-btn">
+          <img src="/assets/poc_icon_strawberry.png"/></button>
+        <button onClick={() => setCurrentTab("completed")} className="completed-tab-btn">
+        <img src="/assets/poc_icon_cake.png"/></button>
+        <button className="none-btn"></button>
         <button onClick={() => {
           setCurrentTab("edit");
 
@@ -284,12 +290,69 @@ const Todo = ({ date }) => {
 
           setTodos(updatedTodos);  // 상태 업데이트
           setCategories(updatedCategories);  // 카테고리도 수정 가능 상태로 설정
-        }}>✏️</button>
+        }}className="edit-tab-btn">✏️</button>
+        </header>
       </div>
 
       {currentTab === "doing" && (
         <article className="doing-container">
-          <button onClick={() => setShowCategoryInput(true)}>+ 카테고리 추가</button>
+          <div className="in-doing-container">
+          {categories.map((category, index) => (
+  <div key={category.id} 
+    className="category-container" 
+    style={{ 
+      backgroundColor: `var(--category-${index + 1}-bg)`, 
+      border: `2px solid var(--category-${index + 1}-border)`
+    }}
+    >
+    <div className="category-line"
+    style={{
+      width: '450px',
+      height: '60px',
+      margin: '0 auto',
+      borderBottom:`2px solid var(--category-${index + 1}-border)`
+    }}>
+      <h3>
+        <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+        <span className="category-name">{category.name}</span>
+        </h3>
+      {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
+      <button onClick={() => setShowTodoInput(category.id)}
+      className="add-todo-btn"
+      >+</button>
+    </div>
+    <ul>
+      {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
+        <li key={todo.id} 
+          style={{ borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)` }}
+        >
+          <button onClick={() => toggleComplete(todo.id)} 
+            className="heart-btn"
+            style={{ color: `var(--category-${index + 1}-heart)` }}
+          >
+            <FaHeart />
+          </button>
+          <input
+            type="text"
+            value={todo.text}
+            onChange={(e) => handleTodoChange(e, todo.id)}
+          />
+        </li>
+      ))}
+      {/* 특정 카테고리 선택 시 할 일 입력창 표시 */}
+    {showTodoInput === category.id && (
+      <input
+        type="text"
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+        onKeyDown={(e) => handleKeyDownTodo(e, category.id)}
+        placeholder="할 일 입력"
+        autoFocus // 자동 포커스
+      />
+    )}
+    </ul>
+  </div>
+))}
           {showCategoryInput && (
             <div>
               <input
@@ -301,51 +364,34 @@ const Todo = ({ date }) => {
               />
             </div>
           )}
-
-          {categories.map((category, index) => (
-            <div key={category.id} className={`category category-${index + 1}`} 
-            style={{ backgroundColor: category.color }}>              
-            <h3>{category.name}</h3>
-              <div>
-                <input
-                  type="text"
-                  value={newTodo}
-                  onChange={(e) => setNewTodo(e.target.value)}
-                  onKeyDown={(e) => handleKeyDownTodo(e, category.id)}
-                  placeholder="할 일 입력"
-                />
-              </div>
-
-              <ul>
-                {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
-                  <li key={todo.id} className={`category-${index + 1}`} style={{ backgroundColor: category.color }}>
-                    <input
-                      type="text"
-                      value={todo.text}
-                      onChange={(e) => handleTodoChange(e, todo.id)}
-                    />
-                    <button onClick={() => toggleComplete(todo.id)}>❤️</button>
-                  </li>
-                ))}
-              </ul>
             </div>
-          ))}
+            <button onClick={() => setShowCategoryInput(true)} 
+            className="add-category-btn"
+            >+</button>
         </article>
       )}
+
 
 {currentTab === "completed" && (
   <article className="completed-container">
     {categories.map((category, index) => (
-      <div key={category.id} className={`category category-${index + 1}`} 
-      style={{ backgroundColor: category.color }}>              
-      <h3>{category.name}</h3>
+      <div key={category.id} className={`category category-${index + 1}`} >              
+      <h3>
+      <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+        {category.name}
+        </h3>
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
             .map((todo) => (
-              <li key={todo.id} className={`category category-${index + 1}`}style={{ backgroundColor: category.color }}>
+              <li key={todo.id} className={`category category-${index + 1}`}>
+                <button onClick={() => toggleUnComplete(todo.id)} 
+                className="heart-btn"
+                style={{
+                  color: `var(--category-${index + 1}-heart)`, // 실선, 하트 이모지 배경색을 사용
+                }}
+                ><FaHeart /></button> {/* 완료 취소 버튼 */}
                 <span>{todo.text}</span>
-                <button onClick={() => toggleUnComplete(todo.id)}>💔</button> {/* 완료 취소 버튼 */}
               </li>
             ))}
         </ul>
@@ -361,10 +407,10 @@ const Todo = ({ date }) => {
     <button onClick={saveEdit}>저장</button>
 
     {categories.map((category, index) => (
-      <div key={category.id} className={`category category-${index + 1}`}
-      style={{ backgroundColor: category.color }}> 
+      <div key={category.id} className={`category category-${index + 1}`}> 
         {category.isEditing ? (
           <>
+            <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>          
             <input
               type="text"
               value={category.name}
@@ -372,7 +418,10 @@ const Todo = ({ date }) => {
             />
           </>
         ) : (
-          <h3>{category.name}</h3>
+          <h3>
+            <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+            {category.name}
+          </h3>
         )}
         <button onClick={() => deleteCategory(category.id)}>삭제</button>
 
@@ -381,7 +430,7 @@ const Todo = ({ date }) => {
           {todos
             .filter(todo => todo.categoryId === category.id)
             .map((todo) => (
-              <li key={todo.id} className={`category category-${index + 1}`}style={{ backgroundColor: category.color }}>
+              <li key={todo.id} className={`category category-${index + 1}`}>
                 {todo.isEditing ? (
                   <>
                     <input

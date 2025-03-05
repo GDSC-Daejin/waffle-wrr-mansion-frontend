@@ -240,11 +240,14 @@ const TimeTracker = ({ date }) => {
                 onChange={(e) => setStartHour(e.target.value)}
               >
                 <option value="">시작 시간</option>
-                {hours.map((hour) => (
-                  <option key={hour} value={hour}>
-                    {hour < 10 ? `0${hour}` : hour}
-                  </option>
-                ))}
+                {hours.map((hour) => {
+  const displayHour = hour > 24 ? hour - 24 : hour;
+  return (
+    <option key={hour} value={hour}>
+      {displayHour < 10 ? `0${displayHour}` : displayHour}
+    </option>
+  );
+})}
               </select>
               <select
                 value={startMinute}
@@ -267,11 +270,14 @@ const TimeTracker = ({ date }) => {
                 onChange={(e) => setEndHour(e.target.value)}
               >
                 <option value="">종료 시간</option>
-                {hours.map((hour) => (
-                  <option key={hour} value={hour}>
-                    {hour < 10 ? `0${hour}` : hour}
-                  </option>
-                ))}
+                {hours.map((hour) => {
+  const displayHour = hour > 24 ? hour - 24 : hour;
+  return (
+    <option key={hour} value={hour}>
+      {displayHour < 10 ? `0${displayHour}` : displayHour}
+    </option>
+  );
+})}
               </select>
               <select
                 value={endMinute}

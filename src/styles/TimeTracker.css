@@ -4,17 +4,27 @@
   display: flex;
   flex-direction:column; /* 시간을 가로로 배치 */
   width: 100%;
-  height: 400px;
+  height: 550px;
   max-width: 100%;
+  margin-left: 35px;
 }
 
 .hour-block {
+  
   position: relative;
-  width: 100px; /* 각 시간 블록의 가로 크기 */
-  height: 100%; /* 높이는 100%로 유지 */
-  border: 1px solid #ccc;
+  width: 90%; /* 각 시간 블록의 가로 크기 */
+  height: 100%;
+  border-bottom: 1px solid #C3A39C;
   display: flex;
   flex-direction: column; /* 30분 단위로 세로로 나열 */
+  z-index: 2;
+}
+.hour-block span {
+  position: absolute;
+  left: -20px; /* 시간을 블록 밖에 배치 */
+  font-size: 14px;
+  color: #333;
+  font-family: "SUIT Variable";
 }
 
 .half-hour-line {
@@ -22,22 +32,21 @@
   top: 0;
   left: 50%; /* 수평 가운데 */
   height: 100%;
-  width: 2px; /* 세로선의 두께 */
-  background-color: #ccc;
+  border: dashed #C3A39C;
+  border-width: 1px;
+  z-index: 7;
 }
-
 
 .todo-block {
   position: absolute;
-  width: 50%; /* 시간 블록의 가로 크기 */
-  height: 100%; /* 30분 단위로 세로 크기 */
-  background-color: yellow;
+  width: 49%; /* 시간 블록의 가로 크기 */
+  height: 83.5%; /* 30분 단위로 세로 크기 */
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   font-size: 12px;
   padding: 2px;
+  
 }
 
 
@@ -51,6 +60,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 50;
 }
 
 .timemodal {
@@ -73,36 +83,11 @@
   max-width: 100%;
 }
 
-.hour-block {
-  position: relative;
-  width: 100px; /* 각 시간 블록의 가로 크기 */
-  height: 100%; /* 높이는 100%로 유지 */
-  border: 1px solid #ccc;
-  display: flex;
-  flex-direction: column; /* 세로로 30분 단위로 나열 */
-}
 
-.half-hour-line {
-  position: absolute;
-  top: 50%; /* 30분을 가로로 나누는 선 */
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #ccc;
-}
 
-.todo-block {
-  position: absolute;
-  height: 100%; /* 세로 크기는 시간 블록과 동일 */
-  background-color: yellow;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 12px;
-  padding: 2px;
-  z-index: 1; /* 겹치는 할 일을 위로 올리기 */
-}
+
+
+
 
 
 
