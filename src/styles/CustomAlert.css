@@ -1,0 +1,70 @@
+.custom-alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.custom-alert-box {
+    background-color: #FFF8E7;
+    padding: 20px;
+    border-radius: 24px;
+    text-align: center;
+    min-width: 250px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    
+    transform: translateY(-20px);
+    animation: slideDown 0.3s ease-in-out forwards;
+}
+
+.custom-alert-box p {
+    margin-bottom: 20px;
+    font-size: 12.8pt;
+    color: #3F2D20;
+    font-family: "SUIT Variable";
+    font-weight: 600;
+
+}
+
+.custom-alert-box button {
+    font-family: "cafe24syongsyong";
+    background-color: #FF9EB3;
+    color: #FAFAFA;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 12.8pt;
+    margin-left: 300px;
+    height: 30px;
+    text-align: center;
+    
+}
+
+
+.alert-message {
+    white-space: pre-line; /* 줄바꿈 인식 */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

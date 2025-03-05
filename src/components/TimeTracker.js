@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig";
 import { collection, query, where, getDocs, setDoc, doc,deleteDoc } from "firebase/firestore";
 import "../styles/TimeTracker.css";
+import CustomAlert from "./CustomAlert";
 
 const TimeTracker = ({ date }) => {
-  const hours = Array.from({ length: 22 }, (_, i) => 5 + i); // 5AM ~ 2AM
+  const hours = Array.from({ length: 21 }, (_, i) => 5 + i); // 5AM ~ 2AM
   const minutes = [0, 30]; // 30분 단위
 
   const [selectedHour, setSelectedHour] = useState(null);
@@ -20,6 +21,9 @@ const TimeTracker = ({ date }) => {
   const [endMinute, setEndMinute] = useState(""); // 종료 분
   const [color, setColor] = useState(""); // 색상 (카테고리 색상)
   const [timeBlocks, setTimeBlocks] = useState([]); // 선택한 시간 블록
+  const [alertMessage, setAlertMessage] = useState(""); // 알림 메시지
+  const [isAlertOpen, setIsAlertOpen] = useState(false); // 알림 상태
+
 
   // Firebase에서 카테고리 가져오기
   const fetchCategories = async () => {
@@ -137,7 +141,8 @@ const fetchTimeBlocks = async () => {
       (parseInt(startHour) > parseInt(endHour)) ||
       (parseInt(startHour) === parseInt(endHour) && parseInt(startMinute) >= parseInt(endMinute))
     ) {
-      alert("시작 시간과 종료 시간을 올바르게 선택해주세요.");
+      setAlertMessage("선택한 시간에는 할 일을 추가할 수 없어요. \n\n선택한 시간을 확인해주세요!");
+      setIsAlertOpen(true); // 알림 창 열기
       return;
     }
 
@@ -158,8 +163,13 @@ const fetchTimeBlocks = async () => {
   saveTimeBlocksToFirebase(newBlocks);
   setTimeBlocks(prevState => [...prevState, ...newBlocks]);
 
-  alert(`시간이 저장되었습니다: ${startHour}:${startMinute} ~ ${endHour}:${endMinute}`);
+  setAlertMessage(`시간이 저장되었습니다: ${startHour}:${startMinute} ~ ${endHour}:${endMinute}`);
+  setIsAlertOpen(true); // 알림 창 열기  
   closeModal();
+};
+
+const closeAlert = () => {
+  setIsAlertOpen(false);
 };
 
  // 시간 블록 초기화 함수
@@ -229,16 +239,16 @@ useEffect(() => {
           </div>
         );
       })}
-      
+
       {/* 모달 */}
       {isModalOpen && (
         <div className="timemodal-overlay">
           <div className="timemodal">
-            <h2>{selectedHour}:00 할 일 선택</h2>
-
             {/* 카테고리 선택 (드롭다운) */}
-            <h3>📂 카테고리 선택</h3>
+             <div className="selection-row">
+            <h3>카테고리</h3>
             <select
+              className="select-category"
               value={selectedCategory}
               onChange={(e) => {
                 const selectedCatId = e.target.value;
@@ -251,23 +261,25 @@ useEffect(() => {
                   setColor(selectedCat.color || "#ccc"); // 색상이 없으면 기본 회색
                 }
               }}
-            >
-              <option value="">카테고리 선택</option>
+            ><option value=""></option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
             </select>
+            </div>
 
             {/* To-Do 선택 (드롭다운) */}
-            <h3>📌 To-Do 선택</h3>
+            <div className="selection-row">
+            <h3>할 일</h3>
             <select
+            className="select-todo"
               value={selectedTodo}
               onChange={(e) => setSelectedTodo(e.target.value)}
               disabled={!selectedCategory} // 카테고리 선택 전에는 비활성화
             >
-              <option value="">To-Do 선택</option>
+              <option value=""></option>
               {todos
                 .filter(todo => todo.categoryId === selectedCategory)
                 .map(todo => (
@@ -276,15 +288,16 @@ useEffect(() => {
                   </option>
                 ))}
             </select>
-
-            {/* 시작 시간 설정 */}
-            <h3>⏰ 시작 시간 설정</h3>
+            </div>
+<div className="time-picker-box">
             <div className="time-picker">
+            <h3 className="time">시간</h3>
               <select
                 value={startHour}
                 onChange={(e) => setStartHour(e.target.value)}
+                style={{webkitAppearance:"none"}}
               >
-                <option value="">시작 시간</option>
+                <option value="">24</option>
                 {hours.map((hour) => {
   const displayHour = hour > 24 ? hour - 24 : hour;
   return (
@@ -294,27 +307,26 @@ useEffect(() => {
   );
 })}
               </select>
+              :
               <select
                 value={startMinute}
                 onChange={(e) => setStartMinute(e.target.value)}
+                style={{webkitAppearance:"none"}}
               >
-                <option value="">시작 분</option>
+                <option value="">00</option>
                 {minutes.map((minute) => (
                   <option key={minute} value={minute}>
-                    {minute < 10 ? `0${minute}` : minute} 분
+                    {minute < 10 ? `0${minute}` : minute}
                   </option>
                 ))}
               </select>
-            </div>
-
-            {/* 종료 시간 설정 */}
-            <h3>⏳ 종료 시간 설정</h3>
-            <div className="time-picker">
+             ~ 
               <select
                 value={endHour}
                 onChange={(e) => setEndHour(e.target.value)}
+                style={{webkitAppearance: "none"}}
               >
-                <option value="">종료 시간</option>
+                <option value="">24</option>
                 {hours.map((hour) => {
   const displayHour = hour > 24 ? hour - 24 : hour;
   return (
@@ -324,25 +336,36 @@ useEffect(() => {
   );
 })}
               </select>
+              :
               <select
                 value={endMinute}
                 onChange={(e) => setEndMinute(e.target.value)}
+                style={{webkitAppearance: "none"}}
               >
-                <option value="">종료 분</option>
+                <option value="">00</option>
                 {minutes.map((minute) => (
                   <option key={minute} value={minute}>
-                    {minute < 10 ? `0${minute}` : minute} 분
+                    {minute < 10 ? `0${minute}` : minute}
                   </option>
                 ))}
               </select>
             </div>
-
+          </div>
             {/* 확인 버튼 */}
-            <button onClick={handleSave}>확인</button>
-            <button onClick={closeModal}>닫기</button>
+            <div className="save-btn-box">
+            <button 
+            onClick={handleSave}
+            className="modal-save-btn"
+            >확인</button>
+            </div>
           </div>
         </div>
       )}
+      <CustomAlert
+      message={alertMessage}
+      isOpen={isAlertOpen}
+      closeAlert={closeAlert}
+    />
     </div>
   );
 };

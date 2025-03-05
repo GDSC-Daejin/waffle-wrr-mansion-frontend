@@ -271,9 +271,9 @@ const Todo = ({ date }) => {
       <div>
         <header className="tab-btns">
         <button onClick={() => setCurrentTab("doing")}className="doing-tab-btn">
-          <img src="/assets/poc_icon_strawberry.png"/></button>
+          <img src="/assets/poc_icon_strawberry.png" alt="icon_strawberry"/></button>
         <button onClick={() => setCurrentTab("completed")} className="completed-tab-btn">
-        <img src="/assets/poc_icon_cake.png"/></button>
+        <img src="/assets/poc_icon_cake.png" alt="icon_cake"/></button>
         <button className="none-btn"></button>
         <button onClick={() => {
           setCurrentTab("edit");
@@ -313,7 +313,7 @@ const Todo = ({ date }) => {
       borderBottom:`2px solid var(--category-${index + 1}-border)`
     }}>
       <h3>
-        <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+        <img src="/assets/poc_icon_strawberry.png" alt="category_icon" className="category_icon"/>
         <span className="category-name">{category.name}</span>
         </h3>
       {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
