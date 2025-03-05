@@ -1,7 +1,7 @@
 /*TimeTracker.js */
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebaseConfig";
-import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc,deleteDoc } from "firebase/firestore";
 import "../styles/TimeTracker.css";
 
 const TimeTracker = ({ date }) => {
@@ -52,19 +52,39 @@ const TimeTracker = ({ date }) => {
   };
 
   // Firebase에서 시간 블록 가져오기
-  const fetchTimeBlocks = async () => {
-    const q = query(collection(db, "timeBlocks"), where("date", "==", date));
-    try {
-      const querySnapshot = await getDocs(q);
-      const timeBlocksData = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setTimeBlocks(timeBlocksData);
-    } catch (error) {
-      console.error("Error fetching time blocks:", error);
+const fetchTimeBlocks = async () => {
+  const q = query(collection(db, "timeBlocks"), where("date", "==", date));
+  try {
+    const querySnapshot = await getDocs(q);
+    const timeBlocksData = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // 유효한 타임블럭만 필터링
+    const validTimeBlocks = [];
+
+    // 각 타임블럭을 순회하면서, 해당 타임블럭의 할일을 Firebase의 To-Do 목록과 비교
+    for (let block of timeBlocksData) {
+      const matchingTodo = todos.find(todo => todo.text === block.todo); // 타임블럭에 저장된 할일과 To-Do 목록의 할일 비교
+      if (matchingTodo) {
+        // 일치하는 할일이 있으면 유효한 타임블럭에 추가
+        validTimeBlocks.push(block);
+      } else {
+        // 일치하지 않는 할일이 있으면 타임블럭 삭제
+        await deleteDoc(doc(db, "timeBlocks", block.id));
+        console.log(`타임블럭(${block.id}) 삭제됨`);
+      }
     }
-  };
+
+    // 유효한 타임블럭만 상태에 저장
+    setTimeBlocks(validTimeBlocks);
+
+  } catch (error) {
+    console.error("Error fetching time blocks:", error);
+  }
+};
+
 
   // 시간 클릭 시 모달 열기
   const openModal = (hour) => {
@@ -142,16 +162,40 @@ const TimeTracker = ({ date }) => {
   closeModal();
 };
 
+ // 시간 블록 초기화 함수
+  const resetTimeBlocks = async () => {
+    try {
+      // Firebase에서 해당 날짜의 모든 시간 블록 삭제
+      const q = query(collection(db, "timeBlocks"), where("date", "==", date));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref); // 각 문서 삭제
+      });
+
+      setTimeBlocks([]); // 클라이언트 상태 초기화
+      alert("시간 블록이 초기화되었습니다.");
+    } catch (error) {
+      console.error("시간 블록 초기화 오류:", error);
+    }
+  };
 
 
+  // 컴포넌트가 처음 렌더링될 때, 또는 날짜가 변경될 때 데이터 가져오기
+useEffect(() => {
+  const fetchData = async () => {
+    await fetchCategories();  // 카테고리 가져오기
+    await fetchTodos();       // To-Do 가져오기
+  };
 
-  
-  // 컴포넌트가 처음 렌더링될 때 시간 블록 가져오기
-  useEffect(() => {
+  fetchData();
+}, [date]);  // 날짜가 변경될 때마다 다시 실행
+
+// todos가 업데이트된 후에 timeBlocks를 가져오는 useEffect 추가
+useEffect(() => {
+  if (todos.length > 0) { // todos가 로드된 후에 timeBlocks 가져오기
     fetchTimeBlocks();
-  }, [date]); // 날짜가 변경될 때마다 새로 불러오기
-
-
+  }
+}, [todos]); // todos가 업데이트될 때마다 실행
 
   return (
     <div className="time-tracker">
@@ -185,7 +229,7 @@ const TimeTracker = ({ date }) => {
           </div>
         );
       })}
-
+      
       {/* 모달 */}
       {isModalOpen && (
         <div className="timemodal-overlay">

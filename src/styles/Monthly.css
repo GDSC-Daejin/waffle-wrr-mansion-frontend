@@ -37,7 +37,7 @@
 .Num-m-text {
   position: absolute; /* 텍스트를 이미지 위에 절대적으로 배치 */
   top: 50%; /* 이미지의 수직 가운데에 텍스트 배치 */
-  left: 50%; /* 이미지의 수평 가운데에 텍스트 배치 */
+  left: 56%; /* 이미지의 수평 가운데에 텍스트 배치 */
   transform: translate(-50%, -50%); /* 정확히 중앙 정렬 */
   font-size: 6.4rem; /* 텍스트 크기 */
   font-weight: 400; /* 텍스트 두께 */
@@ -137,7 +137,6 @@
   max-width: auto;
   position: relative; /* 날짜와 아이콘을 배치하기 위해 필요 */
   border: 1.6px dashed #FFE7EE !important; /* 점선 외곽선 추가 */
-
 }
 
 .react-calendar__tile abbr {
