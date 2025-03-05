@@ -270,10 +270,19 @@ const Todo = ({ date }) => {
     <div className="todo-container">
       <div>
         <header className="tab-btns">
-        <button onClick={() => setCurrentTab("doing")}className="doing-tab-btn">
-          <img src="/assets/poc_icon_strawberry.png" alt="icon_strawberry"/></button>
-        <button onClick={() => setCurrentTab("completed")} className="completed-tab-btn">
-        <img src="/assets/poc_icon_cake.png" alt="icon_cake"/></button>
+        <button onClick={() => setCurrentTab("doing")}
+        className="doing-tab-btn">
+          <img src="/assets/poc_icon_strawberry.png" 
+          alt="doing-tab-btn"
+          className="hidden-hover"/>
+          <div className="show-hover">해야 할 일</div>
+          </button>
+        <button onClick={() => setCurrentTab("completed")} 
+        className="completed-tab-btn">
+        <img src="/assets/poc_icon_cake.png" alt="completed-tab-btn"
+        className="hidden-hover"/>
+        <div className="show-hover">완료한 일</div>
+        </button>
         <button className="none-btn"></button>
         <button onClick={() => {
           setCurrentTab("edit");
@@ -290,7 +299,11 @@ const Todo = ({ date }) => {
 
           setTodos(updatedTodos);  // 상태 업데이트
           setCategories(updatedCategories);  // 카테고리도 수정 가능 상태로 설정
-        }}className="edit-tab-btn">✏️</button>
+        }}className="edit-tab-btn">
+        <img src="/assets/poc_icon_pencile.png" alt="edit-tab-btn"
+        className="hidden-hover"/>
+        <div className="show-hover">수정</div>  
+        </button>
         </header>
       </div>
 
@@ -313,7 +326,7 @@ const Todo = ({ date }) => {
       borderBottom:`2px solid var(--category-${index + 1}-border)`
     }}>
       <h3>
-        <img src="/assets/poc_icon_strawberry.png" alt="category_icon" className="category_icon"/>
+        <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
         <span className="category-name">{category.name}</span>
         </h3>
       {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
@@ -357,14 +370,31 @@ const Todo = ({ date }) => {
   </div>
 ))}
           {showCategoryInput && (
-            <div>
+            <div 
+            className="category-input" 
+            style={{ 
+              backgroundColor: "#FAFAFA", 
+              border: "2px solid #FFEBCC",
+              borderRadius: "24px",
+              borderBottom: "1px solid #FFEBCC",
+              height:"70px",
+              width:"480px",
+            }}>
+              <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
               <input
                 type="text"
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
                 onKeyDown={handleKeyDownCategory}
-                placeholder="새 카테고리 입력"
+                placeholder="new category"
+                style={{ 
+                  backgroundColor: "#FAFAFA", 
+                  borderBottom: "2px solid #FFEBCC",
+                  height:"20px",
+                  width:"450px"
+                }}
               />
+              
             </div>
           )}
             </div>
@@ -407,7 +437,8 @@ const Todo = ({ date }) => {
 {currentTab === "edit" && (
   <article className="edit-container">
     {/* 상단에 한 개의 저장 버튼만 위치 */}
-    <button onClick={saveEdit}>저장</button>
+    <button 
+    onClick={saveEdit}>저장</button>
 
     {categories.map((category, index) => (
       <div key={category.id} className={`category category-${index + 1}`}> 

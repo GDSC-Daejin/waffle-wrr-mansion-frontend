@@ -176,6 +176,7 @@
   background-color: #FFF8E7;
   border-end-start-radius: 28.8px;
   border-end-end-radius: 28.8px;
+  height: 450px;
   max-height: 740px;
   width: 508px;
   display: flex;
@@ -203,7 +204,8 @@
 }
 
 .doing-tab-btn img,
-.completed-tab-btn img{
+.completed-tab-btn img,
+.edit-tab-btn img{
   width: 2.215rem;
   height: auto;
   border: none;  
@@ -213,9 +215,24 @@
   background-color: #FFF8E7;
 
 }
+.show-hover{
+  display: none;
+}
+.doing-tab-btn:hover .show-hover{
+  display: block;
+}
+.doing-tab-btn:hover .hidden-hover{
+  display: none;
+}
 .completed-tab-btn {
   grid-column: span 2; /* 3~4칸 차지 */
   background-color: #FFEEC6;
+}
+.completed-tab-btn:hover .show-hover{
+  display: block;
+}
+.completed-tab-btn:hover .hidden-hover{
+  display: none;
 }
 .none-btn{
   background-color: transparent;
@@ -230,6 +247,12 @@
   border-top-left-radius: 28.8px;
   border-top-right-radius: 28.8px;
   background-color: #FFEEC6;
+}
+.edit-tab-btn:hover .show-hover{
+  display: block;
+}
+.edit-tab-btn:hover .hidden-hover{
+  display: none;
 }
 /* 카테고리 추가 버튼 중앙 정렬 */
 .add-category-btn{
@@ -280,7 +303,13 @@
   margin-right: 10px;
 }
 
+
 /* 카테고리 컨테이너 스타일 */
+.category-input{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .category-container{
 border-radius: 24px;
 width: 480px;
