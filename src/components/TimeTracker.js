@@ -121,27 +121,26 @@ const TimeTracker = ({ date }) => {
       return;
     }
 
-    // 선택한 시간만큼 색칠 및 저장 로직 추가 (시간 블록에 할 일이 표시되고 색상 설정)
-    const startTimeInMinutes = (parseInt(startHour) * 60) + parseInt(startMinute);
-    const endTimeInMinutes = (parseInt(endHour) * 60) + parseInt(endMinute);
+ // ✅ 선택된 To-Do의 text 값을 가져오기
+  const selectedTodoObj = todos.find(todo => todo.id === selectedTodo);
+  const selectedTodoText = selectedTodoObj ? selectedTodoObj.text : "할 일 없음"; // 기본값 설정
 
-    // 시간 블록 계산 (시작 시간부터 종료 시간까지)
-    let newBlocks = [];
-    for (let time = startTimeInMinutes; time < endTimeInMinutes; time += 30) {
-      const hour = Math.floor(time / 60);
-      const minute = time % 60;
-      newBlocks.push({ hour, minute, todo: selectedTodo, color: color });
-    }
+  const startTimeInMinutes = (parseInt(startHour) * 60) + parseInt(startMinute);
+  const endTimeInMinutes = (parseInt(endHour) * 60) + parseInt(endMinute);
 
-    // Firebase에 시간 블록 저장
-    saveTimeBlocksToFirebase(newBlocks);
+  let newBlocks = [];
+  for (let time = startTimeInMinutes; time < endTimeInMinutes; time += 30) {
+    const hour = Math.floor(time / 60);
+    const minute = time % 60;
+    newBlocks.push({ hour, minute, todo: selectedTodoText, color: color }); // ✅ text 값 저장
+  }
 
-    // 시간 블록 추가
-    setTimeBlocks(prevState => [...prevState, ...newBlocks]);
+  saveTimeBlocksToFirebase(newBlocks);
+  setTimeBlocks(prevState => [...prevState, ...newBlocks]);
 
-    alert(`시간이 저장되었습니다: ${startHour}:${startMinute} ~ ${endHour}:${endMinute}`);
-    closeModal();
-  };
+  alert(`시간이 저장되었습니다: ${startHour}:${startMinute} ~ ${endHour}:${endMinute}`);
+  closeModal();
+};
 
 
 
@@ -177,7 +176,9 @@ const TimeTracker = ({ date }) => {
                       left: block.minute === 0 ? 0 : '50%', // 30분 단위로 왼쪽(0분)과 오른쪽(30분) 배치
                       zIndex: index + 1, // 겹치는 할 일이 있을 경우 순차적으로 배치
                     }}
-                  />
+                  >
+                    {block.todo}
+                  </div>
                 );
               }
             })}

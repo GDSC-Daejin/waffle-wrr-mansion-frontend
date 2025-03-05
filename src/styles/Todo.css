@@ -367,8 +367,7 @@
 .completed-tab-btn img{
   width: 2.215rem;
   height: auto;
-  border: none;
-  
+  border: none;  
 }
 .doing-tab-btn {
   grid-column: span 2; /* 1~2칸 차지 */
@@ -460,6 +459,7 @@ margin: 5px;
   width: 32.38px;
   height: auto;
 }
+
 .category-name{
   font-size: 1rem;
   letter-spacing: -0.8px;

@@ -324,7 +324,10 @@ const Todo = ({ date }) => {
     <ul>
       {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
         <li key={todo.id} 
-          style={{ borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)` }}
+          style={{ 
+            borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
+            listStyle: "none"
+          }}
         >
           <button onClick={() => toggleComplete(todo.id)} 
             className="heart-btn"
