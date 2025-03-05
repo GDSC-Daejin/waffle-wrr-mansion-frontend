@@ -14,13 +14,14 @@
     height: 100%;
     object-fit: cover; /* 정사각형 안에 꽉 맞춤 */
     border-radius: 28.8px; /* 모서리 둥글게 */
+    margin-top: 50px;
 }
 
 /* 기본 딸기 아이콘 스타일 */
 .strawberry-icon {
     position: absolute;
     bottom: -50px; /* 아이콘이 잘리지 않도록 조정 */
-    right: 50px; /* 위치 조정 */
+    right: 20px; /* 위치 조정 */
     width: 350px; /* 크기 조정 */
     height: auto;
 }
