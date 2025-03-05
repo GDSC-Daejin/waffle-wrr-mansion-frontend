@@ -1,92 +1,75 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { storage, db } from "../config/firebaseConfig"; // Firebase 설정 불러오기
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage 관련
+import { collection, addDoc, getDocs } from "firebase/firestore"; // Firestore 관련
+import "../styles/Photo.css"; // CSS 파일
 
 const Photo = () => {
   const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(""); // Firestore에서 가져올 이미지 URL
   const [hover, setHover] = useState(false);
 
-  const handleImageUpload = (event) => {
+  useEffect(() => {
+    fetchImage(); // Firestore에서 이미지 URL 가져오기
+  }, []);
+
+  const fetchImage = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "photos"));
+      if (!querySnapshot.empty) {
+        const firstDoc = querySnapshot.docs[0].data(); // 첫 번째 이미지만 가져오기 (단순 예제)
+        setImageUrl(firstDoc.url);
+      }
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  };
+
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    // Firebase Storage에 업로드할 경로 설정
+    const storageRef = ref(storage, `photos/${file.name}`);
+
+    try {
+      // Firebase Storage에 이미지 업로드
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef); // 업로드된 파일의 URL 가져오기
+
+      // Firestore에 이미지 URL 저장
+      await addDoc(collection(db, "photos"), { url: downloadURL });
+
+      setImageUrl(downloadURL); // UI 업데이트
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   };
 
   return (
-    <div className="relative flex justify-center items-center">
-      {/* 이미지 업로드 버튼 */}
-      <label
-        className="relative cursor-pointer"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        {image ? (
-          <div className="w-[333.87px] h-[371.2px] overflow-hidden rounded-[20px] bg-gray-200">
-            <img
-              src={image}
-              alt="Uploaded"
-              className="w-full h-full object-cover" // 비율을 유지하며 자르기
-            />
-          </div>
+    <div
+      className="photo-container"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <label htmlFor="fileInput" className="cursor-pointer">
+        {imageUrl ? (
+          <img src={imageUrl} alt="Uploaded" className="uploaded-image" />
         ) : (
-          <div className="w-[333.87px] h-[371.2px] flex justify-center items-center bg-gray-200 rounded-[20px]">
-            <span
-              className="text-[64px] font-bold"
-              style={{
-                color: "#FFFFFF",
-                textShadow: "4px 4px 0px #5C4033",
-              }}
-            >
-              사진
-            </span>
-          </div>
+          <div className="upload-placeholder">이미지 업로드</div>
         )}
-
-        {/* 드래그 시 "+ 사진 넣기" 표시 */}
-        {!image && hover && (
-          <div className="absolute inset-0 flex justify-center items-center">
-            <span
-              className="text-[64px] font-bold"
-              style={{
-                color: "#FFFFFF",
-                textShadow: "4px 4px 0px #5C4033",
-              }}
-            >
-              + 사진 넣기
-            </span>
-          </div>
-        )}
-
-        {/* 파일 입력 필드 */}
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageUpload}
-        />
       </label>
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="hidden"
+      />
     </div>
   );
 };
 
 export default Photo;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
