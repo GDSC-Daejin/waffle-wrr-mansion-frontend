@@ -159,167 +159,6 @@
 
 }
 
-/* 색상 세트 정의 */
-:root {
-  /* 1번 카테고리 색상 세트 */
-  --category-1-bg: #FAFAFA;
-  --category-1-highlight: #FDF3E3;  /* 형광펜 효과(글자 위에 옅게) */
-  --category-1-text-color: #DEBEAF;  /* 글자색 */
-  --category-1-dotted-border: #FCF6EC;  /* 점선 */
-  --category-1-solid-border: #FDF3E3;  /* 실선 */
-  --category-1-heart: #FDF3E3;  /* 하트 이모지 배경색 */
-  --category-1-border: #FFEBCC;  /* 테두리 */
-
-  /* 2번 카테고리 색상 세트 */
-  --category-2-bg: #FAFAFA;
-  --category-2-highlight: #FDDBE7;  /* 형광펜 효과(글자 위에 옅게) */
-  --category-2-text-color: #DEAFC8;  /* 글자색 */
-  --category-2-dotted-border: #FCE7EF;  /* 점선 */
-  --category-2-solid-border: #FDDBE7;  /* 실선 */
-  --category-2-heart: #FDDBE7;  /* 하트 이모지 배경색 */
-  --category-2-border: #FFBCD4;  /* 테두리 */
-
-  /* 3번 카테고리 색상 세트 */
-  --category-3-bg: #FAFAFA;
-  --category-3-highlight: #FDE5E9;  /* 형광펜 효과(글자 위에 옅게) */
-  --category-3-text-color: #DEAFBA;  /* 글자색 */
-  --category-3-dotted-border: #FCEEF0;  /* 점선 */
-  --category-3-solid-border: #FDE5E9;  /* 실선 */
-  --category-3-heart: #FDE5E9;  /* 하트 이모지 배경색 */
-  --category-3-border: #FFD1D8;  /* 테두리 */
-
-  /* 4번 카테고리 색상 세트 */
-  --category-4-bg: #FAFAFA;
-  --category-4-highlight: #E7F3E3;  /* 형광펜 효과(글자 위에 옅게) */
-  --category-4-text-color: #C5DEAF;  /* 글자색 */
-  --category-4-dotted-border: #EFF6EC;  /* 점선 */
-  --category-4-solid-border: #E7F3E3;  /* 실선 */
-  --category-4-heart: #E7F3E3;  /* 하트 이모지 배경색 */
-  --category-4-border: #D5EDCC;  /* 테두리 */
-
-  /* 5번 카테고리 색상 세트 */
-  --category-5-bg: #FAFAFA;
-  --category-5-highlight: #D7EFED;  /* 형광펜 효과(글자 위에 옅게) */
-  --category-5-text-color: #AFDBDE;  /* 글자색 */
-  --category-5-dotted-border: #E5F4F2;  /* 점선 */
-  --category-5-solid-border: #D7EFED;  /* 실선 */
-  --category-5-heart: #D7EFED;  /* 하트 이모지 배경색 */
-  --category-5-border: #B4E5E0;  /* 테두리 */
-
-  /* 6번 카테고리 색상 세트 */
-  --category-6-bg: #FAFAFA;
-  --category-6-highlight: #EEEBF8;  /* 형광펜 효과(글자 위에 옅게) */
-  --category-6-text-color: #CAAFDE;  /* 글자색 */
-  --category-6-dotted-border: #F3F1F9;  /* 점선 */
-  --category-6-solid-border: #EEEBF8;  /* 실선 */
-  --category-6-heart: #EEEBF8;  /* 하트 이모지 배경색 */
-  --category-6-border: #E2DFFF;  /* 테두리 */
-}
-
-
-/* 1번 카테고리 스타일 */
-.category-1 {
-  background-color: var(--category-1-highlight);
-  color: var(--category-1-text-color);
-  border-bottom: 2px solid var(--category-1-solid-border);
-  border: 2.4px dotted var(--category-1-dotted-border);
-}
-
-.category-1 .heart-btn {
-  color: var(--category-1-heart);
-}
-
-.category-1 .category-container {
-  border: 2px solid var(--category-1-border);
-  background-color: var(--category-1-bg);
-}
-
-/* 2번 카테고리 스타일 */
-.category-2 {
-  background-color: var(--category-2-highlight);
-  color: var(--category-2-text-color);
-  border-bottom: 2px solid var(--category-2-solid-border);
-  border: 2.4px dotted var(--category-2-dotted-border);
-}
-
-.category-2 .heart-btn {
-  color: var(--category-2-heart);
-}
-
-.category-2 .category-container {
-  border: 2px solid var(--category-2-border);
-  background-color: var(--category-2-bg);
-
-}
-/* 3번 카테고리 스타일 */
-.category-3 {
-  background-color: var(--category-3-highlight);
-  color: var(--category-3-text-color);
-  border-bottom: 2px solid var(--category-3-solid-border);
-  border: 2.4px dotted var(--category-3-dotted-border);
-}
-
-.category-3 .heart-btn {
-  color: var(--category-3-heart);
-}
-
-.category-3 .category-container {
-  border: 2px solid var(--category-3-border);
-  background-color: var(--category-3-bg);
-
-}
-/* 4번 카테고리 스타일 */
-.category-4 {
-  background-color: var(--category-4-highlight);
-  color: var(--category-4-text-color);
-  border-bottom: 2px solid var(--category-4-solid-border);
-  border: 2.4px dotted var(--category-4-dotted-border);
-}
-
-.category-4 .heart-btn {
-  color: var(--category-4-heart);
-}
-
-.category-4 .category-container {
-  border: 2px solid var(--category-4-border);
-  background-color: var(--category-4-bg);
-
-}
-/* 5번 카테고리 스타일 */
-.category-5 {
-  background-color: var(--category-5-highlight);
-  color: var(--category-5-text-color);
-  border-bottom: 2px solid var(--category-5-solid-border);
-  border: 2.4px dotted var(--category-5-dotted-border);
-}
-
-.category-5 .heart-btn {
-  color: var(--category-5-heart);
-}
-
-.category-5 .category-container {
-  border: 2px solid var(--category-5-border);
-  background-color: var(--category-5-bg);
-
-}
-/* 6번 카테고리 스타일 */
-.category-6 {
-  background-color: var(--category-6-highlight);
-  color: var(--category-6-text-color);
-  border-bottom: 2px solid var(--category-6-solid-border);
-  border: 2.4px dotted var(--category-6-dotted-border);
-}
-
-.category-6 .heart-btn {
-  color: var(--category-6-heart);
-}
-
-.category-6 .category-container {
-  border: 2px solid var(--category-6-border);
-  background-color: var(--category-6-bg);
-
-}
-
 /* Todo 전체 컨테이너 */
 .todo-container {
   width: 532px;
@@ -337,6 +176,7 @@
   background-color: #FFF8E7;
   border-end-start-radius: 28.8px;
   border-end-end-radius: 28.8px;
+  height: 450px;
   max-height: 740px;
   width: 508px;
   display: flex;
@@ -364,7 +204,8 @@
 }
 
 .doing-tab-btn img,
-.completed-tab-btn img{
+.completed-tab-btn img,
+.edit-tab-btn img{
   width: 2.215rem;
   height: auto;
   border: none;  
@@ -374,9 +215,24 @@
   background-color: #FFF8E7;
 
 }
+.show-hover{
+  display: none;
+}
+.doing-tab-btn:hover .show-hover{
+  display: block;
+}
+.doing-tab-btn:hover .hidden-hover{
+  display: none;
+}
 .completed-tab-btn {
   grid-column: span 2; /* 3~4칸 차지 */
   background-color: #FFEEC6;
+}
+.completed-tab-btn:hover .show-hover{
+  display: block;
+}
+.completed-tab-btn:hover .hidden-hover{
+  display: none;
 }
 .none-btn{
   background-color: transparent;
@@ -391,6 +247,12 @@
   border-top-left-radius: 28.8px;
   border-top-right-radius: 28.8px;
   background-color: #FFEEC6;
+}
+.edit-tab-btn:hover .show-hover{
+  display: block;
+}
+.edit-tab-btn:hover .hidden-hover{
+  display: none;
 }
 /* 카테고리 추가 버튼 중앙 정렬 */
 .add-category-btn{
@@ -441,14 +303,20 @@
   margin-right: 10px;
 }
 
+
 /* 카테고리 컨테이너 스타일 */
+.category-input{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .category-container{
 border-radius: 24px;
 width: 480px;
 margin: 5px;
 }
 .category {
-  margin-bottom: px; /* 카테고리와 할일 목록 간 간격 */
+  margin-bottom: 0px; /* 카테고리와 할일 목록 간 간격 */
 }
 .category-line{
   display: flex;
