@@ -26,12 +26,14 @@
     height: auto;
 }
 
-.strawberry-icon:hover {
-    transform: scale(1.05); /* 호버 시 확대 효과 */
+/* 호버 시 블러 이미지로 변경 */
+.photo-container:hover .strawberry-icon {
+    content: url("http://localhost:3000/assets/blur_strawberry.png"); /* 블러 처리된 이미지 */
 }
 
 #fileInput {
     display: none;
 }
+
 
   
