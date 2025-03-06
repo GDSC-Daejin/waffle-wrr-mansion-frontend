@@ -285,10 +285,11 @@ const Todo = ({ date }) => {
         </button>
         <button className="none-btn"></button>
         <button 
+        
   className={currentTab === "edit" ? "save-btn" : "none-btn"}
   onClick={currentTab === "edit" ? saveEdit : undefined}
 >
-  {currentTab === "edit" ? "저장" : ""}
+  {currentTab === "edit" ? <img src="/assets/poc_icon_check.png"/> : ""}
 </button>
         <button onClick={() => {
           setCurrentTab("edit");
@@ -327,26 +328,28 @@ const Todo = ({ date }) => {
             >
           <div className="category-line"
             style={{
-            width: '450px',
-            height: '60px',
-            margin: '0 auto',
-            borderBottom:`2px solid var(--category-${index + 1}-border)`
             }}>
-      <h3>
+      
         <img src="/assets/poc_icon_strawberry.png" 
         className="category_icon"/>
-        <span className="category-name">{category.name}</span>
-        </h3>
+        <div
+        style={{borderBottom:`2px solid var(--category-${index + 1}-border)`}} 
+        className="category-name-box">
+        <span 
+        style={{
+          textDecorationColor:`var(--category-${index + 1}-border)`}}
+        className="category-name">{category.name}</span>
+        </div>
       {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
       <button onClick={() => setShowTodoInput(category.id)}
       className="add-todo-btn"
+      style={{ color:`var(--category-${index + 1}-text-color)`}}
       >+</button>
     </div>
     <ul>
       {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (
         <li key={todo.id} 
           style={{ 
-            borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
             listStyle: "none"
           }}
         >
@@ -357,10 +360,12 @@ const Todo = ({ date }) => {
             <FaHeart />
           </button>
           <input
+          style={{borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, }}
             type="text"
             value={todo.text}
             onChange={(e) => handleTodoChange(e, todo.id)}
           />
+     
         </li>
       ))}
       {/* 특정 카테고리 선택 시 할 일 입력창 표시 */}
@@ -430,20 +435,24 @@ const Todo = ({ date }) => {
       width: '450px',
       height: '60px',
       margin: '0 auto',
-      borderBottom:`2px solid var(--category-${index + 1}-border)`
     }}>
-              
-      <h3>
       <img src="/assets/poc_icon_strawberry.png" 
       className="category_icon"/>
-      <span className="category-name">{category.name}</span>
-        </h3>
+      <div 
+      style={{ borderBottom:`2px solid var(--category-${index + 1}-border)`,
+    }}
+      className="category-name-box">
+      <span 
+      className="category-name"
+      >{category.name}</span>
+        </div>
         </div>
         
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
             .map((todo) => (
+
               <li key={todo.id} 
           style={{ 
             borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
@@ -457,6 +466,7 @@ const Todo = ({ date }) => {
                   color: `var(--category-${index + 1}-heart)`, // 실선, 하트 이모지 배경색을 사용
                 }}
                 ><FaHeart />
+                
                 </button> {/* 완료 취소 버튼 */}
                 <span 
                 style={{
@@ -513,7 +523,10 @@ const Todo = ({ date }) => {
             {category.name}
           </h3>
         )}
-        <button onClick={() => deleteCategory(category.id)}>x</button>
+        <button 
+        className="delete-btn"
+        style={{ color:`var(--category-${index + 1}-text-color)`}}
+        onClick={() => deleteCategory(category.id)}>ㅡ</button>
 
         {/* 할 일 출력 */}
         </div>
@@ -524,7 +537,6 @@ const Todo = ({ date }) => {
             .map((todo) => (
         <li className="edit-todo-li" key={todo.id} 
           style={{ 
-            borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
             listStyle: "none"
           }}
         >
@@ -537,6 +549,8 @@ const Todo = ({ date }) => {
         {todo.isEditing ? (
                   <>          
                     <input
+                    style={{borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
+                  }}
                     className="edit-todo"
                       type="text"
                       value={todo.text}
@@ -548,7 +562,8 @@ const Todo = ({ date }) => {
                 )}
                 <button 
                 className="delete-btn"
-                onClick={() => deleteTodo(todo.id)}>x</button>
+                style={{ color:`var(--category-${index + 1}-text-color)`}}
+                onClick={() => deleteTodo(todo.id)}>ㅡ</button>
               </li>
             ))}
         </ul>

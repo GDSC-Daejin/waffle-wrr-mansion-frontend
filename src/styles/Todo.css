@@ -1,3 +1,4 @@
+/*Todo.css*/
 /* 색상 세트 정의 */
 :root {
   /* 1번 카테고리 색상 세트 */
@@ -162,7 +163,6 @@
 /* Todo 전체 컨테이너 */
 .todo-container {
   width: 532px;
-  height: 740px;
   display: flex;
   flex-direction: column;
   align-items: center; /* 내부 요소 중앙 정렬 */
@@ -176,14 +176,13 @@
   background-color: #FFF8E7;
   border-end-start-radius: 28.8px;
   border-end-end-radius: 28.8px;
-  height: 450px;
-  max-height: 740px;
   width: 508px;
   display: flex;
-  flex-direction: column;
-  align-items: center; /* 내부 요소 중앙 정렬 */
-  justify-content: center; /* 내부 요소 수직 중앙 정렬 */
-
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가운데 정렬 */
+  justify-content: flex-start; /* 상단부터 채우도록 설정 */
+  overflow-y: auto; /* 내용이 많아지면 스크롤 가능 */
+  min-height: 200px; /* 기본 높이 */
 }
 
 .tab-btns {
@@ -203,11 +202,17 @@
 }
 
 .doing-tab-btn img,
-.completed-tab-btn img,
-.edit-tab-btn img{
+.completed-tab-btn img
+{
   width: 2.215rem;
   height: auto;
   border: none;  
+}
+.edit-tab-btn img,
+.save-btn img{
+  width: 1.8rem;
+  height: auto;
+  border: none; 
 }
 .doing-tab-btn {
   grid-column: span 3; /* 1~2칸 차지 */
@@ -251,7 +256,9 @@
   border-top-left-radius: 28.8px;
   border-top-right-radius: 28.8px;
   background-color: #FFEEC6;
+  
 }
+
 .edit-tab-btn{
   height: 44px;
   width: 82px;
@@ -289,15 +296,10 @@
   border: none;
   font-family: "cafe24syongsyong";
   font-size: 2rem;
-  color: #DEBEAF;
 }
 
 /* 할 일 목록 스타일 */
-.todo-list {
-  padding-left: 0;
-  margin-top: 10px;
-  color: #3F2D20;
-}
+
 /* 할일 항목 스타일 */
 .todo-list li {
   display: flex;
@@ -317,8 +319,8 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: blue;
-  margin-right: 10px;
+  margin-right: 0px;
+  margin-left: -12px;
 }
 
 
@@ -327,29 +329,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 .category-container{
 border-radius: 24px;
 width: 480px;
-margin: 5px;
-}
-.category {
-  margin-bottom: 0px; /* 카테고리와 할일 목록 간 간격 */
+margin: 8px 0;
 }
 .category-line{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 480px;
+  margin: 0 auto;
+  margin-Top:8px;
 }
 .category_icon {
-  width: 32.38px;
-  height: auto;
+  width: auto;
+  height: 36px;
+  margin-right: 8.42px;
+  margin-left: 20px;
 }
-
+.category-name-box{
+  width: 400px;
+}
 .category-name{
-  font-size: 1rem;
+  font-size: 2rem;
   letter-spacing: -0.8px;
   color: #3F2D20;
+
 }
 
 
@@ -365,14 +373,15 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px; /* 적절한 크기로 조정 */
-  height: 24px;
+  font-size: 20px;
 }
 
 .edit-todo {
-  flex-grow: 1; /* 입력 필드가 남은 공간을 차지하도록 설정 */
+  flex-grow: 0.92; /* 입력 필드가 남은 공간을 차지하도록 설정 */
 }
-
-
-
+.delete-btn{
+  background-color: transparent;
+  border: none;
+  font-family: "cafe24syongsyong";
+}
 
