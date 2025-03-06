@@ -70,7 +70,7 @@ const Todo = ({ date }) => {
       });
       setCategories(prevCategories => [
         ...prevCategories,
-        { id: docRef.id, name: newCategory.trim(), date, color: categoryColor }, // 색상 포함
+        { id: docRef.id, name: newCategory.trim(), date, color: categoryColor }, 
       ]);
       setNewCategory("");
       setShowCategoryInput(false);
@@ -284,6 +284,12 @@ const Todo = ({ date }) => {
         <div className="show-hover">완료한 일</div>
         </button>
         <button className="none-btn"></button>
+        <button 
+  className={currentTab === "edit" ? "save-btn" : "none-btn"}
+  onClick={currentTab === "edit" ? saveEdit : undefined}
+>
+  {currentTab === "edit" ? "저장" : ""}
+</button>
         <button onClick={() => {
           setCurrentTab("edit");
 
@@ -299,7 +305,8 @@ const Todo = ({ date }) => {
 
           setTodos(updatedTodos);  // 상태 업데이트
           setCategories(updatedCategories);  // 카테고리도 수정 가능 상태로 설정
-        }}className="edit-tab-btn">
+        }} 
+        className="edit-tab-btn">
         <img src="/assets/poc_icon_pencile.png" alt="edit-tab-btn"
         className="hidden-hover"/>
         <div className="show-hover">수정</div>  
@@ -311,22 +318,23 @@ const Todo = ({ date }) => {
         <article className="doing-container">
           <div className="in-doing-container">
           {categories.map((category, index) => (
-  <div key={category.id} 
-    className="category-container" 
-    style={{ 
-      backgroundColor: `var(--category-${index + 1}-bg)`, 
-      border: `2px solid var(--category-${index + 1}-border)`
-    }}
-    >
-    <div className="category-line"
-    style={{
-      width: '450px',
-      height: '60px',
-      margin: '0 auto',
-      borderBottom:`2px solid var(--category-${index + 1}-border)`
-    }}>
+          <div key={category.id} 
+            className="category-container" 
+            style={{ 
+              backgroundColor: `var(--category-${index + 1}-bg)`, 
+              border: `2px solid var(--category-${index + 1}-border)`
+            }}
+            >
+          <div className="category-line"
+            style={{
+            width: '450px',
+            height: '60px',
+            margin: '0 auto',
+            borderBottom:`2px solid var(--category-${index + 1}-border)`
+            }}>
       <h3>
-        <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+        <img src="/assets/poc_icon_strawberry.png" 
+        className="category_icon"/>
         <span className="category-name">{category.name}</span>
         </h3>
       {/* + 버튼 클릭 시 해당 카테고리의 입력창 보이기 */}
@@ -380,7 +388,8 @@ const Todo = ({ date }) => {
               height:"70px",
               width:"480px",
             }}>
-              <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+              <img src="/assets/poc_icon_strawberry.png" 
+              className="category_icon"/>
               <input
                 type="text"
                 value={newCategory}
@@ -407,45 +416,91 @@ const Todo = ({ date }) => {
 
 {currentTab === "completed" && (
   <article className="completed-container">
+    <div className="in-completed-container">
     {categories.map((category, index) => (
-      <div key={category.id} className={`category category-${index + 1}`} >              
+      <div key={category.id}
+      className="category-container"
+      style={{ 
+        backgroundColor: `var(--category-${index + 1}-bg)`, 
+        border: `2px solid var(--category-${index + 1}-border)`
+      }}
+      >
+      <div className="category-line"
+    style={{
+      width: '450px',
+      height: '60px',
+      margin: '0 auto',
+      borderBottom:`2px solid var(--category-${index + 1}-border)`
+    }}>
+              
       <h3>
-      <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
-        {category.name}
+      <img src="/assets/poc_icon_strawberry.png" 
+      className="category_icon"/>
+      <span className="category-name">{category.name}</span>
         </h3>
+        </div>
+        
         <ul>
           {todos
             .filter(todo => todo.completed && todo.categoryId === category.id) // 완료된 할 일만 필터링
             .map((todo) => (
-              <li key={todo.id} className={`category category-${index + 1}`}>
+              <li key={todo.id} 
+          style={{ 
+            borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
+            listStyle: "none",
+            fontFamily:"SUIT Variable"
+          }}
+        >
                 <button onClick={() => toggleUnComplete(todo.id)} 
                 className="heart-btn"
                 style={{
                   color: `var(--category-${index + 1}-heart)`, // 실선, 하트 이모지 배경색을 사용
                 }}
-                ><FaHeart /></button> {/* 완료 취소 버튼 */}
-                <span>{todo.text}</span>
+                ><FaHeart />
+                </button> {/* 완료 취소 버튼 */}
+                <span 
+                style={{
+                  backgroundColor:`var(--category-${index + 1}-highlight)`,
+                }}
+                >{todo.text}</span>
               </li>
             ))}
         </ul>
+        
       </div>
     ))}
+    </div>
   </article>
 )}
 
 
 {currentTab === "edit" && (
   <article className="edit-container">
+    <div className="in-edit-container">
     {/* 상단에 한 개의 저장 버튼만 위치 */}
-    <button 
-    onClick={saveEdit}>저장</button>
 
     {categories.map((category, index) => (
-      <div key={category.id} className={`category category-${index + 1}`}> 
+      <div key={category.id} 
+      className={`category-container`}
+      style={{ 
+        backgroundColor: `var(--category-${index + 1}-bg)`, 
+        border: `2px solid var(--category-${index + 1}-border)`
+      }}
+  > 
+  <div className="category-line"
+    style={{
+      width: '450px',
+      height: '60px',
+      margin: '0 auto',
+      borderBottom:`2px solid var(--category-${index + 1}-border)`
+    }}>
+
         {category.isEditing ? (
           <>
-            <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>          
+            <img src="/assets/poc_icon_strawberry.png" 
+            className="category_icon"/>          
             <input
+            className="edit-category"
               type="text"
               value={category.name}
               onChange={(e) => handleCategoryChange(e, category.id)}
@@ -453,21 +508,36 @@ const Todo = ({ date }) => {
           </>
         ) : (
           <h3>
-            <img src="/assets/poc_icon_strawberry.png" className="category_icon"/>
+            <img src="/assets/poc_icon_strawberry.png" 
+            className="category_icon"/>
             {category.name}
           </h3>
         )}
-        <button onClick={() => deleteCategory(category.id)}>삭제</button>
+        <button onClick={() => deleteCategory(category.id)}>x</button>
 
         {/* 할 일 출력 */}
+        </div>
         <ul>
+        
           {todos
             .filter(todo => todo.categoryId === category.id)
             .map((todo) => (
-              <li key={todo.id} className={`category category-${index + 1}`}>
-                {todo.isEditing ? (
-                  <>
+        <li className="edit-todo-li" key={todo.id} 
+          style={{ 
+            borderBottom: `2.4px dotted var(--category-${index + 1}-dotted-border)`, 
+            listStyle: "none"
+          }}
+        >
+          <div className="edit-heart-btn"
+                style={{
+                  color: `var(--category-${index + 1}-heart)`, // 실선, 하트 이모지 배경색을 사용
+                }}
+                ><FaHeart />
+                </div>                
+        {todo.isEditing ? (
+                  <>          
                     <input
+                    className="edit-todo"
                       type="text"
                       value={todo.text}
                       onChange={(e) => handleTodoChange(e, todo.id)}
@@ -476,12 +546,15 @@ const Todo = ({ date }) => {
                 ) : (
                   <span>{todo.text}</span>
                 )}
-                <button onClick={() => deleteTodo(todo.id)}>삭제</button>
+                <button 
+                className="delete-btn"
+                onClick={() => deleteTodo(todo.id)}>x</button>
               </li>
             ))}
         </ul>
       </div>
     ))}
+    </div>
   </article>
 )}
     </div>

@@ -171,7 +171,7 @@
 
 /* 진행 중(To-Do) 컨테이너 중앙 정렬 */
 .in-doing-container,
-.completed-container,
+.in-completed-container,
 .edit-container {
   background-color: #FFF8E7;
   border-end-start-radius: 28.8px;
@@ -189,7 +189,7 @@
 .tab-btns {
   width:  508px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6칸으로 나눔 */
+  grid-template-columns: repeat(9, 1fr); /* 6칸으로 나눔 */
   align-items: center;
   margin-bottom: 0; /* todo-container와 붙도록 설정 */
 }
@@ -197,7 +197,6 @@
 .doing-tab-btn,
 .completed-tab-btn {
   height: 44px;
-  width: 170px;
   border: none;
   border-top-left-radius: 28.8px;
   border-top-right-radius: 28.8px;
@@ -211,7 +210,7 @@
   border: none;  
 }
 .doing-tab-btn {
-  grid-column: span 2; /* 1~2칸 차지 */
+  grid-column: span 3; /* 1~2칸 차지 */
   background-color: #FFF8E7;
 
 }
@@ -225,7 +224,7 @@
   display: none;
 }
 .completed-tab-btn {
-  grid-column: span 2; /* 3~4칸 차지 */
+  grid-column: span 3; /* 3~4칸 차지 */
   background-color: #FFEEC6;
 }
 .completed-tab-btn:hover .show-hover{
@@ -235,8 +234,23 @@
   display: none;
 }
 .none-btn{
-  background-color: transparent;
+  height: 44px;
+  width: 82px;
+  grid-column: span 1; /* 6번째 칸 차지 */
+  justify-self: end; /* 오른쪽 정렬 */
   border: none;
+  background-color: transparent;
+
+}
+.save-btn{
+  height: 44px;
+  width: 82px;
+  grid-column: span 1; /* 6번째 칸 차지 */
+  justify-self: end; /* 오른쪽 정렬 */
+  border: none;
+  border-top-left-radius: 28.8px;
+  border-top-right-radius: 28.8px;
+  background-color: #FFEEC6;
 }
 .edit-tab-btn{
   height: 44px;
@@ -292,7 +306,11 @@
   background-color: #FAFAFA;
 }
 
-
+.edit-todo-li {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 요소 간 간격 조정 */
+}
 /* 하트 버튼 스타일 */
 .heart-btn {
   background: none;
@@ -343,7 +361,17 @@ input {
   background: #FAFAFA;
 }
 
+.edit-heart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; /* 적절한 크기로 조정 */
+  height: 24px;
+}
 
+.edit-todo {
+  flex-grow: 1; /* 입력 필드가 남은 공간을 차지하도록 설정 */
+}
 
 
 

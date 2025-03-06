@@ -1,4 +1,7 @@
 /* TimeTracker.css */
+.todo-block{
+  font-family: "SUIT Variable";
+}
 
 .time-tracker {
   margin-top: 10px;
