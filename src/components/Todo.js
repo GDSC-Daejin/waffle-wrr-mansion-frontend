@@ -60,7 +60,7 @@ const Todo = ({ date }) => {
     }
   
     // 색상 배열에서 색상 가져오기
-    const categoryColor = colorPalette[categories.length]; // 색상은 카테고리 개수 순으로 설정
+    const categoryColor = colorPalette[categories.length]; // 색상: 카테고리 개수 순
   
     try {
       const docRef = await addDoc(collection(db, "categories"), {

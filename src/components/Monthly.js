@@ -24,7 +24,7 @@ const Monthly = () => {
     return () => unsubscribe();
   }, []);
 
-  // ✅ Firebase에서 특정 날짜의 할 일 데이터 가져오는 함수
+  // Firebase에서 특정 날짜의 할 일 데이터 가져옴.
   const fetchTodoStatsForDate = async (selectedDate) => {
     const q = query(collection(db, "todos"), where("date", "==", selectedDate));
 
@@ -47,7 +47,7 @@ const Monthly = () => {
     }
   };
 
-  // ✅ 현재 월의 모든 날짜에 대해 할 일 상태를 가져와 콘솔 출력
+  // 현재 월의 모든 날짜에 대해 할 일 상태를 가져와 콘솔 출력
   useEffect(() => {
     const fetchAllTodoStatus = async () => {
       let statusMap = {};
@@ -67,7 +67,7 @@ const Monthly = () => {
           statusMap[dateStr] = "cake"; // 모든 할 일 완료
         }
 
-        // ✅ 콘솔에 현재 날짜별 상태 출력
+        // 콘솔에 현재 날짜별 상태 출력
         console.log(`[${dateStr}] 할 일: ${totalTodos}, 완료: ${completedTodos}, 상태: ${statusMap[dateStr]}`);
       }
 
