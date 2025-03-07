@@ -5,8 +5,32 @@
     background: url("http://localhost:3000/assets/Group 175.png") no-repeat center/contain;
     margin: 0 auto;
   }
+
+  /* .memo-body {
+    flex: 1;
+    padding: 5px 10px; /* 🔥 위쪽 padding 줄이기 */
+    /* margin-top: 10px; 🔥 위쪽 마진 줄이기 */
+/* }  */
+
+.memo-textarea {
+    width: 100%;
+    height: auto;
+    min-height: 23px;
+    background: transparent;
+    border: none;
+    resize: none;
+    font-family: "SUIT Variable";
+    font-size: 12.8pt;
+    line-height: 23px;
+    outline: none;
+    color: #3F2D20;
+    padding-top: 15px; /* 🔥 위쪽 패딩 없애기 */
+    padding-left: 36px;
+}
+
+
   
-  .memo-body {
+  /* .memo-body {
     flex: 1;
     background: url("http://localhost:3000/assets/Group 177.png") repeat-y center/contain;
     padding: 10px;
@@ -21,15 +45,15 @@
     resize: none;
     font-family: "SUIT Variable";
     font-size: 12.8pt;
-    line-height: 23px; /* 줄 간격 조정 */
+    line-height: 23px; 
     outline: none;
     color: #3F2D20;
     right: 50px;
-    padding-top: 5px;  /* 입력 시작 위치를 살짝 위로 이동 */
-    padding-left: 15px; /* 왼쪽 여백 추가 */
-  }
+    padding-top: 0px;
+    padding-left: 36px; 
+  } */
   
-  .memo-textarea::placeholder {
+  /* .memo-textarea::placeholder {
     color: #b0a59f;
-  }
+  } */
   
