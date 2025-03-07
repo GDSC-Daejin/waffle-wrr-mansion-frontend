@@ -283,19 +283,23 @@ useEffect(() => {
               {todos
                 .filter(todo => todo.categoryId === selectedCategory)
                 .map(todo => (
-                  <option key={todo.id} value={todo.id}>
+                  <option key={todo.id}s value={todo.id}>
                     {todo.text}
                   </option>
                 ))}
             </select>
             </div>
-<div className="time-picker-box">
+            <div
+            style={{marginBottom:"5px"}}>
+            <div className="time-picker-box">
             <div className="time-picker">
             <h3 className="time">시간</h3>
               <select
                 value={startHour}
                 onChange={(e) => setStartHour(e.target.value)}
-                style={{webkitAppearance:"none"}}
+                style={{
+                  webkitAppearance:"none"
+                }}
               >
                 <option value="">24</option>
                 {hours.map((hour) => {
@@ -351,12 +355,13 @@ useEffect(() => {
               </select>
             </div>
           </div>
+          </div>
             {/* 확인 버튼 */}
             <div className="save-btn-box">
             <button 
             onClick={handleSave}
             className="modal-save-btn"
-            >확인</button>
+            >완료</button>
             </div>
           </div>
         </div>
