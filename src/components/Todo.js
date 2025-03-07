@@ -22,6 +22,7 @@ const Todo = ({ date }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [currentTab, setCurrentTab] = useState("doing");
   const [showTodoInput, setShowTodoInput] = useState(null);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   const fetchTodos = async () => {
     const q = query(collection(db, "todos"), where("date", "==", date));
