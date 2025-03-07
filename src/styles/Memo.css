@@ -26,7 +26,7 @@
     color: #3F2D20;
     right: 50px;
     padding-top: 5px;  /* 입력 시작 위치를 살짝 위로 이동 */
-    padding-left: 15px; /* 왼쪽 여백 추가 */
+    padding-left: 36px; /* 왼쪽 여백 추가 */
   }
   
   .memo-textarea::placeholder {
