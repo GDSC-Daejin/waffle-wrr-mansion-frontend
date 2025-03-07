@@ -4,6 +4,7 @@ import { db } from "../config/firebaseConfig";
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } from "firebase/firestore"; 
 import "../styles/Todo.css";
 import { FaHeart } from "react-icons/fa";
+import CustomAlert from "./CustomAlert";
 
 const colorPalette = [
   ["#FFEBCC"], // category-1 색상 세트
@@ -22,7 +23,9 @@ const Todo = ({ date }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [currentTab, setCurrentTab] = useState("doing");
   const [showTodoInput, setShowTodoInput] = useState(null);
-  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(""); // 알림 메시지
+  const [isAlertOpen, setIsAlertOpen] = useState(false); // 알림 상태
+  
 
   const fetchTodos = async () => {
     const q = query(collection(db, "todos"), where("date", "==", date));
@@ -56,7 +59,8 @@ const Todo = ({ date }) => {
   const addCategory = async () => {
     if (!newCategory.trim()) return;
     if (categories.length >= 6) { // 카테고리 최대 6개 제한
-      alert("카테고리는 최대 6개만 추가할 수 있습니다.");
+      setAlertMessage("카테고리는 최대 10개의 할 일만 추가할 수 있습니다.");
+      setIsAlertOpen(true);
       return;
     }
   
@@ -84,9 +88,11 @@ const Todo = ({ date }) => {
     if (!newTodo.trim()) return;
     const categoryTodos = todos.filter(todo => todo.categoryId === categoryId);
     if (categoryTodos.length >= 10) { // 한 카테고리당 할 일 최대 10개 제한
-      alert("이 카테고리는 최대 10개의 할 일만 추가할 수 있습니다.");
+      setAlertMessage("카테고리는 최대 6개만 추가할 수 있습니다.");
+      setIsAlertOpen(true);      
       return;
     }
+    
     try {
       const docRef = await addDoc(collection(db, "todos"), {
         categoryId,
@@ -105,7 +111,9 @@ const Todo = ({ date }) => {
       console.error("Error adding todo:", error);
     }
   };
-
+  const closeAlert = () => {
+    setIsAlertOpen(false);
+  };
   const toggleComplete = async (todoId) => {
     try {
       const todoRef = doc(db, "todos", todoId);
@@ -269,6 +277,7 @@ const Todo = ({ date }) => {
 
   return (
     <div className="todo-container">
+
       <div>
         <header className="tab-btns">
         <button 
@@ -353,6 +362,12 @@ const Todo = ({ date }) => {
       className="add-todo-btn"
       style={{ color:`var(--category-${index + 1}-text-color)`}}
       >+</button>
+      <CustomAlert
+      message={alertMessage}
+      isOpen={isAlertOpen}
+      closeAlert={closeAlert}
+    />
+
     </div>
     <ul>
       {todos.filter(todo => todo.categoryId === category.id && !todo.completed).map((todo) => (

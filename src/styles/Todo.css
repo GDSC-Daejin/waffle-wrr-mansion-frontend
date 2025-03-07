@@ -359,12 +359,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+  margin-bottom: 4px;
 }
 .category-container{
 border-radius: 24px;
 width: 480px;
-margin: 8px 0;
+margin: 4px 0;
 }
 .category-line{
   display: flex;
