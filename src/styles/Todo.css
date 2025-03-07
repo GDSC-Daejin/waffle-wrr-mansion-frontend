@@ -207,12 +207,16 @@
   width: 2.215rem;
   height: auto;
   border: none;  
+  opacity: 80%;
+
 }
 .edit-tab-btn img,
 .save-btn img{
   width: 1.8rem;
   height: auto;
-  border: none; 
+  border: none;
+  opacity: 80%;
+ 
 }
 .doing-tab-btn {
   grid-column: span 3; /* 1~2칸 차지 */
@@ -224,6 +228,7 @@
 }
 .doing-tab-btn:hover .show-hover{
   display: block;
+  color: #885D4A;
 }
 .doing-tab-btn:hover .hidden-hover{
   display: none;
@@ -231,6 +236,8 @@
 .completed-tab-btn {
   grid-column: span 3; /* 3~4칸 차지 */
   background-color: #FFEEC6;
+  color: #885D4A;
+
 }
 .completed-tab-btn:hover .show-hover{
   display: block;
@@ -256,19 +263,25 @@
   border-top-left-radius: 28.8px;
   border-top-right-radius: 28.8px;
   background-color: #FFEEC6;
-  
+  color: #885D4A;
+
 }
 
 .save-btn:hover .show-hover {
   display: block;
+  text-shadow: 
+  -1.6px 0px white, 0px 1.6px white, 1.6px 0px white, 0px -1.6px white;
 }
-.save-btn:hover .hidden-hover {
+  .save-btn:hover .hidden-hover {
   display: none;
 }
 
 .show-hover {
   font-family: "cafe24syongsyong";
   font-size: 19.2px;
+  text-shadow: 
+  -1.6px 0px white, 0px 1.6px white, 1.6px 0px white, 0px -1.6px white;
+
 }
 .edit-tab-btn{
   height: 44px;
@@ -279,6 +292,8 @@
   border-top-left-radius: 28.8px;
   border-top-right-radius: 28.8px;
   background-color: #FFEEC6;
+  color: #885D4A;
+
 }
 .edit-tab-btn:hover .show-hover{
   display: block;

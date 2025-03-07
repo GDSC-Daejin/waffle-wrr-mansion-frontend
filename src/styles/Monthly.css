@@ -132,11 +132,11 @@
   text-align: center;
   padding: 10px;
   cursor: pointer;
-  background-color: #FFFBE1;
+  background-color: #FFF8E7;
   max-height: 12vh;
   max-width: auto;
   position: relative; /* 날짜와 아이콘을 배치하기 위해 필요 */
-  border: 1.6px dashed #FFE7EE !important; /* 점선 외곽선 추가 */
+  border: 1.6px dashed #FFDDE3 !important; /* 점선 외곽선 추가 */
 }
 
 .react-calendar__tile abbr {
@@ -153,9 +153,9 @@
 .date-label {
   position: absolute;
   top: 10%;
-  left: 10%;
-  font-size: 1.8rem;
-  padding: 1.2px; /* 내부 여백 추가 (배경을 키우는 역할) */
+  left: 6%;
+  font-size: 1.6rem;
+  padding: px; /* 내부 여백 추가 (배경을 키우는 역할) */
   border-radius: 100%;  /* 동그라미 모양 */
   width: 1.75rem;         /* 너비 */
   height: 1.75rem;        /* 높이 */
@@ -204,13 +204,14 @@
 
   /* 부모 요소(tile) 기준으로 중앙 정렬 */
   position: absolute;
-  left: 60%;
-  transform: translate(-50%, -50%);
+  left: 55%;
+  transform: translate(-60%, -50%);
 }
 
 
 .icon-placeholder {
   font-size: 3rem;
+
 }
 
 
@@ -236,7 +237,7 @@
 /* hover 시 오늘 날짜의 border가 사라지고, hover된 날짜에만 border가 생기도록 설정 */
 .react-calendar__tile:hover {
   border: 3.2px solid #FFC1DC !important;
-  background-color: #FFFBE1 !important;
+  background-color: #FFF8E7 !important;
 
 }
 
@@ -244,6 +245,6 @@
 
 /* 현재 달이 아닌 날짜를 불투명하게 */
 .neighboring-month {
-  background-color: #FFF8E7;
+  background-color: #FFFBF1;
   filter: blur(1.5px);  /* 3px 정도의 블러 효과 */
 }

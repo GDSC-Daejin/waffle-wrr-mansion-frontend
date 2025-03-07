@@ -1,3 +1,10 @@
+.mini-calendar-header {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  width: 100%; /* 전체 너비 사용 */
+  gap: 1rem; /* 버튼과 텍스트 사이 간격 */
+}
 .mini-En-y-m{
 font-size: 2rem;
   font-family: 'SUIT Variable', sans-serif;
