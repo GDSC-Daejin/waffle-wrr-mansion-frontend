@@ -259,6 +259,17 @@
   
 }
 
+.save-btn:hover .show-hover {
+  display: block;
+}
+.save-btn:hover .hidden-hover {
+  display: none;
+}
+
+.show-hover {
+  font-family: "cafe24syongsyong";
+  font-size: 19.2px;
+}
 .edit-tab-btn{
   height: 44px;
   width: 82px;

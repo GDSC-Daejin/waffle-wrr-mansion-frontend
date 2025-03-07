@@ -286,12 +286,17 @@ const Todo = ({ date }) => {
         </button>
         <button className="none-btn"></button>
         <button 
-        
   className={currentTab === "edit" ? "save-btn" : "none-btn"}
   onClick={currentTab === "edit" ? saveEdit : undefined}
 >
-  {currentTab === "edit" ? <img src="/assets/poc_icon_check.png"/> : ""}
+  {currentTab === "edit" ? (
+    <>
+      <img src="/assets/poc_icon_check.png" className="hidden-hover"/>
+      <div className="show-hover">저장</div>
+    </>
+  ) : ""}
 </button>
+
         <button onClick={() => {
           setCurrentTab("edit");
 
