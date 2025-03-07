@@ -216,7 +216,7 @@
 }
 .doing-tab-btn {
   grid-column: span 3; /* 1~2칸 차지 */
-  background-color: #FFF8E7;
+  background-color: #FFEEC6;
 
 }
 .show-hover{
@@ -286,6 +286,10 @@
 .edit-tab-btn:hover .hidden-hover{
   display: none;
 }
+
+.active-tab {
+  background-color: #FFF8E7 !important;
+}
 /* 카테고리 추가 버튼 중앙 정렬 */
 .add-category-btn{
   width: 76px;
@@ -331,7 +335,7 @@
   font-size: 20px;
   cursor: pointer;
   margin-right: 0px;
-  margin-left: -12px;
+  margin-left: -9px;
 }
 
 
@@ -351,7 +355,7 @@ margin: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 480px;
+  width: 470px;
   margin: 0 auto;
   margin-Top:8px;
 }
