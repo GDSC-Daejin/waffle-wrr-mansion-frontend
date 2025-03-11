@@ -35,7 +35,7 @@ const Todo = ({ date }) => {
         id: doc.id,
         ...doc.data()
       }));
-      console.log("📌 Firebase에서 가져온 To-Do 데이터 구조:", JSON.stringify(todosData, null, 2)); // 콘솔 출력
+      console.log(" Firebase에서 가져온 To-Do 데이터 구조:", JSON.stringify(todosData, null, 2)); // 콘솔 출력
       setTodos(todosData);
     } catch (error) {
       console.error("Error fetching todos:", error);
@@ -302,7 +302,7 @@ const Todo = ({ date }) => {
         >
             {currentTab === "edit" ? (
               <>
-                <img src="/assets/poc_icon_check.png" className="hidden-hover"/>
+                <img src="/assets/poc_icon_check.png" alt="edit-hover" className="hidden-hover"/>
                 <div className="show-hover">저장</div>
               </>
             ) : ""}
@@ -348,7 +348,7 @@ const Todo = ({ date }) => {
             }}>
       
         <img src="/assets/poc_icon_strawberry.png" 
-        className="category_icon"/>
+        alt="category_icon"className="category_icon"/>
         <div
         style={{borderBottom:`2px solid var(--category-${index + 1}-border)`}} 
         className="category-name-box">
@@ -417,7 +417,7 @@ const Todo = ({ date }) => {
               width:"480px",
             }}>
               <img src="/assets/poc_icon_strawberry.png" 
-              className="category_icon"/>
+              alt="category_icon"className="category_icon"/>
               <input
                 type="text"
                 value={newCategory}
@@ -455,7 +455,7 @@ const Todo = ({ date }) => {
       >
       <div className="category-line">
       <img src="/assets/poc_icon_strawberry.png" 
-      className="category_icon"/>
+      alt="category_icon"className="category_icon"/>
       <div 
       style={{ 
         width:"480px",
@@ -522,7 +522,7 @@ const Todo = ({ date }) => {
         {category.isEditing ? (
           <>
             <img src="/assets/poc_icon_strawberry.png" 
-            className="category_icon"/>          
+            alt="category_icon"className="category_icon"/>          
             <input
              style={{ 
               backgroundColor: "#FAFAFA", 
@@ -548,7 +548,7 @@ const Todo = ({ date }) => {
           
             <div className="category-line">
             <img src="/assets/poc_icon_strawberry.png" 
-            className="category_icon"/>
+            alt="category_icon"className="category_icon"/>
             <div
              style={{ 
             width:"480px",

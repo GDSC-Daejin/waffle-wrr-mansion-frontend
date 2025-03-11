@@ -146,7 +146,7 @@ const fetchTimeBlocks = async () => {
       return;
     }
 
- // ✅ 선택된 To-Do의 text 값을 가져오기
+ // 선택된 To-Do의 text 값을 가져오기
   const selectedTodoObj = todos.find(todo => todo.id === selectedTodo);
   const selectedTodoText = selectedTodoObj ? selectedTodoObj.text : "할 일 없음"; // 기본값 설정
 
@@ -157,7 +157,7 @@ const fetchTimeBlocks = async () => {
   for (let time = startTimeInMinutes; time < endTimeInMinutes; time += 30) {
     const hour = Math.floor(time / 60);
     const minute = time % 60;
-    newBlocks.push({ hour, minute, todo: selectedTodoText, color: color }); // ✅ text 값 저장
+    newBlocks.push({ hour, minute, todo: selectedTodoText, color: color }); // text 값 저장
   }
 
   saveTimeBlocksToFirebase(newBlocks);
