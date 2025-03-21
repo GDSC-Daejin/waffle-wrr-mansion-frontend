@@ -1,25 +1,22 @@
-/*UserModal.js */
-import React, { useState } from "react";
+// UserModal.js
+import React from "react";
 import MypageModal from "./MypageModal";
 import DeleteAccountModal from "./DeleteAccountModal";
+import useModal from "./useModal";
 
 const UserModal = ({ user, onClose }) => {
-  const [isDeleteModal, setIsDeleteModal] = useState(false); // delete 모달 여부
-
-  // 회원 탈퇴 버튼을 클릭하면 delete 모달로 전환
-  const handleDeleteClick = () => {
-    setIsDeleteModal(true);
-  };
+  const { isDeleteModal, openDeleteModal, closeDeleteModal } = useModal();
 
   return (
     <>
       {isDeleteModal ? (
-        <DeleteAccountModal user={user} onClose={() => setIsDeleteModal(false)} />
+        <DeleteAccountModal user={user} onClose={closeDeleteModal} />
       ) : (
-        <MypageModal user={user} onClose={onClose} onDeleteClick={handleDeleteClick} />
+        <MypageModal user={user} onClose={onClose} onDeleteClick={openDeleteModal} />
       )}
     </>
   );
 };
 
 export default UserModal;
+
