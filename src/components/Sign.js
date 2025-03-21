@@ -1,14 +1,14 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../config/firebaseConfig"; // Firebase 설정 파일
-import { Users } from "../components/Users"; // 유저 생성 함수
+import Users from "../components/Users"; // 수정된 import
 
 export const handleGoogleLogin = async (setUserData, navigate) => {
   const provider = new GoogleAuthProvider();
 
-    // 계정 선택 창 강제
-    provider.setCustomParameters({
-      prompt: "select_account"
-    });
+  // 계정 선택 창 강제
+  provider.setCustomParameters({
+    prompt: "select_account"
+  });
 
   try {
     const result = await signInWithPopup(auth, provider);
