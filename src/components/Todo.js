@@ -5,6 +5,8 @@ import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, getDocs } 
 import "../styles/Todo.css";
 import { FaHeart } from "react-icons/fa";
 import CustomAlert from "./CustomAlert";
+import useFetchFirebase from "../hooks/useFetchFirebase";
+//import useManageFirestore from "../hooks/useManageFirebase";
 
 const colorPalette = [
   ["#FFEBCC"], // category-1 색상 세트
@@ -16,17 +18,18 @@ const colorPalette = [
 ];
 
 const Todo = ({ date }) => {
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
-  const [categories, setCategories] = useState([]);
+//  const [todos, setTodos] = useState([]);
+//  const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
+  const [newTodo, setNewTodo] = useState("");
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [currentTab, setCurrentTab] = useState("doing");
   const [showTodoInput, setShowTodoInput] = useState(null);
   const [alertMessage, setAlertMessage] = useState(""); // 알림 메시지
   const [isAlertOpen, setIsAlertOpen] = useState(false); // 알림 상태
   
-
+  
+/*
   const fetchTodos = async () => {
     const q = query(collection(db, "todos"), where("date", "==", date));
     try {
@@ -55,6 +58,9 @@ const Todo = ({ date }) => {
       console.error("Error fetching categories:", error);
     }
   };
+ */
+  const { data: categories, setData: setCategories } = useFetchFirebase("categories", date);
+  const { data: todos, setData: setTodos } = useFetchFirebase("todos", date);
 
   const addCategory = async () => {
     if (!newCategory.trim()) return;
@@ -271,8 +277,6 @@ const Todo = ({ date }) => {
   };
 
   useEffect(() => {
-    fetchTodos();
-    fetchCategories();
   }, [date]);
 
   return (

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../config/firebaseConfig";
 
-const useFetchFirestore = (collectionName, date) => {
+const useFetchFirebase = (collectionName, date) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -28,4 +28,4 @@ const useFetchFirestore = (collectionName, date) => {
   return { data, error, setData };
 };
 
-export default useFetchFirestore;
+export default useFetchFirebase;
