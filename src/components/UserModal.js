@@ -2,7 +2,7 @@
 import React from "react";
 import MypageModal from "./MypageModal";
 import DeleteAccountModal from "./DeleteAccountModal";
-import useModal from "./useModal";
+import useModal from "../hooks/useModal";
 
 const UserModal = ({ user, onClose }) => {
   const { isDeleteModal, openDeleteModal, closeDeleteModal } = useModal();
